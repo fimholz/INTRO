@@ -61,7 +61,7 @@
   #define LED2_Close()    LED_Close(2)
 #else
   #define LED2_On()       /* empty */
-  #define LED2_On()       /* empty */
+  #define LED2_Off()       /* empty */
   #define LED2_Neg()      /* empty */
   #define LED2_Get()      /* empty */
   #define LED2_Put(val)   FALSE
