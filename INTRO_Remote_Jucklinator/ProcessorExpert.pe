@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PEproject>
   <Header>
-    <Name>INTRO_Remote_Master</Name>
+    <Name>INTRO_Remote_Jucklinator</Name>
     <SavedBy>Erich Styger Local</SavedBy>
     <ModificationStamp>3</ModificationStamp>
     <Date>2016-09-20</Date>
@@ -29,7 +29,7 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
-    <ProjectCompNumb>112</ProjectCompNumb>
+    <ProjectCompNumb>120</ProjectCompNumb>
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>true</AssignInitComponentNameToPrph>

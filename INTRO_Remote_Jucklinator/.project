@@ -34,7 +34,7 @@
 		<link>
 			<name>Sources/INTRO_Common</name>
 			<type>2</type>
-			<locationURI>copy_PARENT/INTRO_Common</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/INTRO_Common</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>
