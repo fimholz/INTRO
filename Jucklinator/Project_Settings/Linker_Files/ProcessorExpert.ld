@@ -4,13 +4,13 @@
 /*##                                   */
 /*##     Filename  : ProcessorExpert.ld */
 /*##                                   */
-/*##     Project   : test_robot        */
+/*##     Project   : Jucklinator       */
 /*##                                   */
-/*##     Processor : MK22FX512VLQ12    */
+/*##     Processor : MK22FX512VLK12    */
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2016-09-22, 15:42, # CodeGen: 0 */
+/*##     Date/Time : 2016-09-30, 13:22, # CodeGen: 0 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */

@@ -30,4 +30,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Sources/INTRO_Common</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/INTRO_HS2016/Projects/Styger/INTRO_Common</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
