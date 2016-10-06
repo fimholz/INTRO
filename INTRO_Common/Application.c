@@ -131,6 +131,7 @@ void APP_Start(void) {
 
     LED1_On();
     WAIT1_Waitms(100);
+    WAIT1_Waitms(100);
     LED2_On();
     WAIT1_Waitms(100);
     LED3_On();
