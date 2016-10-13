@@ -59,7 +59,7 @@
 /* general features */
 #define PL_CONFIG_HAS_LEDS              (1 && !defined(PL_LOCAL_CONFIG_HAS_LEDS_DISABLED)) /* LED driver */
 #define PL_CONFIG_HAS_EVENTS            (1 && !defined(PL_LOCAL_CONFIG_HAS_EVENTS_DISABLED)) /* event driver */
-#define PL_CONFIG_HAS_TIMER             (1 && !defined(PL_LOCAL_CONFIG_CONFIG_HAS_TIMER_DISABLED)) /* timer interrupts */
+#define PL_CONFIG_HAS_TIMER             (1 && !defined(PL_LOCAL_CONFIG_HAS_TIMER_DISABLED)) /* timer interrupts */
 #define PL_CONFIG_HAS_KEYS              (1 && !defined(PL_LOCAL_CONFIG_HAS_KEYS_DISABLED)) /* support for keys */
 #define PL_CONFIG_HAS_TRIGGER           (1 && !defined(PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED)) /* support for triggers */
 #define PL_CONFIG_HAS_DEBOUNCE          (1 && !defined(PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED)) /* support for debouncing */
