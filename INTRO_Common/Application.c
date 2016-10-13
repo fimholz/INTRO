@@ -151,15 +151,21 @@ void APP_Start(void) {
 #if PL_CONFIG_HAS_EVENTS
     EVNT_HandleEvent(APP_EventHandler, TRUE);
 #endif
+
+    EVNT_SetEvent(EVNT_LED_HEARTBEAT);
+    WAIT1_Waitms(500);
+
+    /*
    LED1_On();
    LED2_On();
    LED3_On();
   // Critical();
     WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
-    LED1_Off();
+   /* LED1_Off();
     LED2_Off();
     WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
-    CLS1_SendStr((uint8_t*)"hello world!\r\n", CLS1_GetStdio()->stdOut);
+    /*CLS1_SendStr((uint8_t*)"hello world!\r\n", CLS1_GetStdio()->stdOut);
+    */
   }
 #endif
 }
