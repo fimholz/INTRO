@@ -71,6 +71,9 @@ void Cpu_OnNMIINT(void)
 void TI1_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_CONFIG_HAS_TIMER
+	TMR_OnInterrupt();
+  #endif
 }
 
 /*
@@ -88,6 +91,9 @@ void TI1_OnInterrupt(void)
 void SW5_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_LOCAL_CONFIG_HAS_KEYS
+	KEY_OnInterrupt(KEY_BTN5);
+  #endif
 }
 
 /*
@@ -105,6 +111,9 @@ void SW5_OnInterrupt(void)
 void SW4_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_LOCAL_CONFIG_HAS_KEYS
+	KEY_OnInterrupt(KEY_BTN4);
+  #endif
 }
 
 /*
@@ -122,6 +131,9 @@ void SW4_OnInterrupt(void)
 void SW3_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_LOCAL_CONFIG_HAS_KEYS
+	KEY_OnInterrupt(KEY_BTN3);
+  #endif
 }
 
 /*
@@ -139,6 +151,9 @@ void SW3_OnInterrupt(void)
 void SW2_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_LOCAL_CONFIG_HAS_KEYS
+	KEY_OnInterrupt(KEY_BTN2);
+  #endif
 }
 
 /*
@@ -156,6 +171,9 @@ void SW2_OnInterrupt(void)
 void SW1_OnInterrupt(void)
 {
   /* Write your code here ... */
+  #if PL_LOCAL_CONFIG_HAS_KEYS
+	KEY_OnInterrupt(KEY_BTN1);
+  #endif
 }
 
 /* END Events */
