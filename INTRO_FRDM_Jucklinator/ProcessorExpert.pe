@@ -3,7 +3,7 @@
   <Header>
     <Name>INTRO_FRDM_Jucklinator</Name>
     <SavedBy>Erich Styger Local</SavedBy>
-    <ModificationStamp>14</ModificationStamp>
+    <ModificationStamp>15</ModificationStamp>
     <Date>2016-09-20</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -29,7 +29,7 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
-    <ProjectCompNumb>91</ProjectCompNumb>
+    <ProjectCompNumb>92</ProjectCompNumb>
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>true</AssignInitComponentNameToPrph>
@@ -23660,7 +23660,7 @@
         <ItemSymbol>Serial</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>RTT1</Value>
+        <Value>AS1</Value>
       </ItemState>
       <ItemState>
         <ItemSymbol>ConsoleSempahore</ItemSymbol>
@@ -24248,7 +24248,7 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>64</Value>
+        <Value>32</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
@@ -24256,7 +24256,7 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>64</Value>
+        <Value>32</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
