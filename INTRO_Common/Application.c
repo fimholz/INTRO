@@ -46,6 +46,11 @@ void APP_EventHandler(EVNT_Handle event) {
 #if PL_CONFIG_HAS_BUZZER
     BUZ_PlayTune(BUZ_TUNE_WELCOME);
 #endif
+    EVNT_SetEvent(EVNT_LED_OFF);
+    WAIT1_Waitms(500);
+    break;
+  case EVNT_LED_OFF:
+    LED1_Off();
     break;
   case EVNT_LED_HEARTBEAT:
     LED1_Neg();
@@ -136,7 +141,7 @@ void APP_Start(void) {
 #if PL_CONFIG_HAS_EVENTS
   EVNT_SetEvent(EVNT_STARTUP);
 #endif
-#if CLS1_DEFAULT_SERIAL
+#if PL_CONFIG_HAS_SHELL && CLS1_DEFAULT_SERIAL
   CLS1_SendStr((uint8_t*)"Hello World!\r\n", CLS1_GetStdio()->stdOut);
 #endif
   APP_AdoptToHardware();
@@ -144,6 +149,7 @@ void APP_Start(void) {
   vTaskStartScheduler(); /* start the RTOS, create the IDLE task and run my tasks (if any) */
   /* does usually not return! */
 #else
+  //EVNT_SetEvent(EVNT_STARTUP);
   for(;;) {
 #if PL_CONFIG_HAS_KEYS
     KEY_Scan();
@@ -151,21 +157,15 @@ void APP_Start(void) {
 #if PL_CONFIG_HAS_EVENTS
     EVNT_HandleEvent(APP_EventHandler, TRUE);
 #endif
-
-    EVNT_SetEvent(EVNT_LED_HEARTBEAT);
-    WAIT1_Waitms(500);
-
-    /*
-   LED1_On();
-   LED2_On();
-   LED3_On();
+   //LED1_On();
+   //LED2_On();
+   //LED3_On();
   // Critical();
+    //WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
+    //LED1_Off();
+    //LED2_Off();
     WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
-   /* LED1_Off();
-    LED2_Off();
-    WAIT1_Waitms(25); /* just wait for some arbitrary time .... */
-    /*CLS1_SendStr((uint8_t*)"hello world!\r\n", CLS1_GetStdio()->stdOut);
-    */
+    //CLS1_SendStr((uint8_t*)"hello world!\r\n", CLS1_GetStdio()->stdOut);
   }
 #endif
 }
