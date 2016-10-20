@@ -35,7 +35,7 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
-
+#include "Timer.h"
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -70,30 +70,7 @@ void Cpu_OnNMIINT(void)
 */
 void TI1_OnInterrupt(void)
 {
-  /* Write your code here ... */
-  #if PL_CONFIG_HAS_TIMER
-	TMR_OnInterrupt();
-  #endif
-}
-
-/*
-** ===================================================================
-**     Event       :  SW1_OnInterrupt (module Events)
-**
-**     Component   :  SW1 [ExtInt]
-**     Description :
-**         This event is called when an active signal edge/level has
-**         occurred.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void SW1_OnInterrupt(void)
-{
-  /* Write your code here ... */
-  #if PL_LOCAL_CONFIG_HAS_KEYS
-	KEY_OnInterrupt(KEY_BTN1);
-  #endif
+  TMR_OnInterrupt();
 }
 
 /* END Events */
