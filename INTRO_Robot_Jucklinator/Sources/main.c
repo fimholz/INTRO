@@ -43,6 +43,8 @@
 #include "TimerIntLdd1.h"
 #include "TU1.h"
 #include "RTT1.h"
+#include "BUZ1.h"
+#include "BitIoLdd4.h"
 #include "WAIT1.h"
 #include "CS1.h"
 #include "HF1.h"

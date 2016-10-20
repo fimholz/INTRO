@@ -14,7 +14,7 @@
 #include "Event.h" /* our own interface */
 #include "CS1.h"
 
-typedef uint32_t EVNT_MemUnit; /*!< memory unit used to store events flags */
+typedef uint16_t EVNT_MemUnit; /*!< memory unit used to store events flags */
 #define EVNT_MEM_UNIT_NOF_BITS  (sizeof(EVNT_MemUnit)*8)
   /*!< number of bits in memory unit */
 
