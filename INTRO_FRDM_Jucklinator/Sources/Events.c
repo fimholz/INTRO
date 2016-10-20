@@ -70,7 +70,9 @@ void Cpu_OnNMIINT(void)
 */
 void TI1_OnInterrupt(void)
 {
+#if PL_CONFIG_HAS_TIMER
   TMR_OnInterrupt();
+#endif
 }
 
 /*
@@ -87,9 +89,7 @@ void TI1_OnInterrupt(void)
 */
 void SW7_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN7);
-#endif
+  /* Write your code here ... */
 }
 
 /*
@@ -106,9 +106,7 @@ void SW7_OnInterrupt(void)
 */
 void SW4_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN4);
-#endif
+  /* Write your code here ... */
 }
 
 /*
@@ -125,9 +123,7 @@ void SW4_OnInterrupt(void)
 */
 void SW3_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN3);
-#endif
+  /* Write your code here ... */
 }
 
 /*
@@ -144,9 +140,7 @@ void SW3_OnInterrupt(void)
 */
 void SW2_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN2);
-#endif
+  /* Write your code here ... */
 }
 
 /*
@@ -163,9 +157,7 @@ void SW2_OnInterrupt(void)
 */
 void SW1_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN1);
-#endif
+  /* Write your code here ... */
 }
 
 /* END Events */
