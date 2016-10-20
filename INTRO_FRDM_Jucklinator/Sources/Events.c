@@ -36,6 +36,7 @@ extern "C" {
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "Timer.h"
+#include "Keys.h"
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -89,7 +90,9 @@ void TI1_OnInterrupt(void)
 */
 void SW7_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_KBI
+  KEY_OnInterrupt(KEY_BTN7);
+#endif
 }
 
 /*
@@ -106,7 +109,9 @@ void SW7_OnInterrupt(void)
 */
 void SW4_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_KBI
+  KEY_OnInterrupt(KEY_BTN4);
+#endif
 }
 
 /*
@@ -123,7 +128,9 @@ void SW4_OnInterrupt(void)
 */
 void SW3_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_KBI
+  KEY_OnInterrupt(KEY_BTN3);
+#endif
 }
 
 /*
@@ -140,7 +147,9 @@ void SW3_OnInterrupt(void)
 */
 void SW2_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_KBI
+  KEY_OnInterrupt(KEY_BTN2);
+#endif
 }
 
 /*
@@ -157,7 +166,9 @@ void SW2_OnInterrupt(void)
 */
 void SW1_OnInterrupt(void)
 {
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_KBI
+  KEY_OnInterrupt(KEY_BTN1);
+#endif
 }
 
 /* END Events */
