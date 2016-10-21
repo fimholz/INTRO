@@ -13,6 +13,7 @@
 #include "WAIT1.h"
 #include "CS1.h"
 #include "Keys.h"
+#include "KeyDebounce.h"
 #include "KIN1.h"
 #if PL_CONFIG_HAS_SHELL
   #include "CLS1.h"
@@ -188,7 +189,11 @@ void APP_Start(void) {
   //EVNT_SetEvent(EVNT_STARTUP);
   for(;;) {
 #if PL_CONFIG_HAS_KEYS
+  #if PL_CONFIG_HAS_DEBOUNCE
+    KEYDBNC_Process();
+  #else
     KEY_Scan();
+  #endif
 #endif
 #if PL_CONFIG_HAS_EVENTS
     EVNT_HandleEvent(APP_EventHandler, TRUE);
