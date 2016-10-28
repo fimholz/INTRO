@@ -21,11 +21,11 @@ typedef uint16_t EVNT_MemUnit; /*!< memory unit used to store events flags */
 static EVNT_MemUnit EVNT_Events[((EVNT_NOF_EVENTS-1)/EVNT_MEM_UNIT_NOF_BITS)+1]; /*!< Bit set of events */
 
 #define SET_EVENT(event) \
-  EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS] |= (1<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS)) /*!< Set the event */
+  EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS] |= (1u<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS)) /*!< Set the event */
 #define CLR_EVENT(event) \
-  EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS] &= ~((1<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS))) /*!< Clear the event */
+  EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS] &= ~((1u<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS))) /*!< Clear the event */
 #define GET_EVENT(event) \
-  (bool)(EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS]&((1<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS)))) /*!< Return TRUE if event is set */
+  (bool)(EVNT_Events[(event)/EVNT_MEM_UNIT_NOF_BITS]&((1u<<(EVNT_MEM_UNIT_NOF_BITS-1))>>(((event)%EVNT_MEM_UNIT_NOF_BITS)))) /*!< Return TRUE if event is set */
 
 void EVNT_SetEvent(EVNT_Handle event) {
   CS1_CriticalVariable()
