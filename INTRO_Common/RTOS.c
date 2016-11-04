@@ -50,8 +50,8 @@ void RTOS_Init(void) {
   static const int led2 = 2;
 
   EVNT_SetEvent(EVNT_STARTUP); /* set startup event */
-  /*! \todo Create tasks here */
 #if 0
+  /*! \todo Create tasks here */
   if (FRTOS1_xTaskCreate(LedTask, (uint8_t *)"Led1", configMINIMAL_STACK_SIZE, (void*)&led1, tskIDLE_PRIORITY, NULL) != pdPASS) {
     for(;;){} /* error case only, stay here! */
   }

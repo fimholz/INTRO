@@ -3,7 +3,7 @@
   <Header>
     <Name>INTRO_Robot_Jucklinator</Name>
     <SavedBy>Erich Styger</SavedBy>
-    <ModificationStamp>111</ModificationStamp>
+    <ModificationStamp>113</ModificationStamp>
     <Date>2016-02-29</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -29,7 +29,7 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
-    <ProjectCompNumb>420</ProjectCompNumb>
+    <ProjectCompNumb>425</ProjectCompNumb>
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>true</AssignInitComponentNameToPrph>
@@ -55170,8 +55170,8 @@
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
               <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-              <Index>18</Index>
-              <EnumSymbVal>Kinetis K24FN120</EnumSymbVal>
+              <Index>16</Index>
+              <EnumSymbVal>Kinetis K22F120</EnumSymbVal>
             </ItemState>
             <ItemState>
               <ItemSymbol>USBCDCenabled</ItemSymbol>
@@ -57897,8 +57897,8 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <Value>false</Value>
+        <Index>0</Index>
+        <Value>true</Value>
       </ItemState>
     </Properties>
     <Methods>

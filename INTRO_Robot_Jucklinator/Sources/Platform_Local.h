@@ -37,12 +37,12 @@
 //#define PL_LOCAL_CONFIG_HAS_TRIGGER_DISABLED              /* disable triggers */
 //#define PL_LOCAL_CONFIG_HAS_DEBOUNCE_DISABLED             /* disable debouncing */
 //#define PL_LOCAL_CONFIG_HAS_RTOS_DISABLED                 /* disable RTOS usage */
-#define PL_LOCAL_CONFIG_HAS_SEGGER_RTT_DISABLED           /* disable Segger RTT */
-#define PL_LOCAL_CONFIG_HAS_SHELL_QUEUE_DISABLED          /* disable shell queue */
+//#define PL_LOCAL_CONFIG_HAS_SEGGER_RTT_DISABLED           /* disable Segger RTT */
+//#define PL_LOCAL_CONFIG_HAS_USB_CDC_DISABLED              /* disable USB CDC */
+//#define PL_LOCAL_CONFIG_HAS_SHELL_QUEUE_DISABLED          /* disable shell queue */
 #define PL_LOCAL_CONFIG_HAS_SQUEUE_SINGLE_CHAR_DISABLED   /* disable single character support in shell queue */
 #define PL_LOCAL_CONFIG_HAS_SEMAPHORE_DISABLED            /* disable semaphore test module */
 #define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
-#define PL_LOCAL_CONFIG_HAS_USB_CDC_DISABLED              /* disable USB CDC */
 
 /* remote controller hardware functionality */
 #define PL_LOCAL_CONFIG_HAS_RADIO_DISABLED                /* disable Radio transceiver */
@@ -54,6 +54,8 @@
 #define PL_LOCAL_CONFIG_HAS_LCD_MENU_DISABLED             /* disable LCD menu */
 
 /* robot hardware functionality */
+//#define PL_LOCAL_CONFIG_HAS_BUZZER_DISABLED               /* disable buzzer (only on robot) */
+#define PL_LOCAL_CONFIG_HAS_BLUETOOTH_DISABLED            /* disable Bluetooth */
 #define PL_LOCAL_CONFIG_HAS_MOTOR_DISABLED                /* disable motor */
 #define PL_LOCAL_CONFIG_HAS_REFLECTANCE_DISABLED          /* disable IR reflectance sensor */
 #define PL_LOCAL_CONFIG_HAS_QUADRATURE_DISABLED           /* disable quadrature encoder */
@@ -65,7 +67,5 @@
 #define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
 #define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
 #define PL_LOCAL_CONFIG_HAS_LINE_MAZE_DISABLED            /* disable maze solving */
-#define PL_LOCAL_CONFIG_HAS_BLUETOOTH_DISABLED            /* disable Bluetooth */
-//#define PL_LOCAL_CONFIG_HAS_BUZZER_DISABLED               /* disable buzzer (only on robot) */
 
 #endif /* SOURCES_PLATFORM_LOCAL_H_ */

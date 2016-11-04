@@ -119,7 +119,9 @@ void FRTOS1_vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
 void FRTOS1_vApplicationTickHook(void)
 {
   /* Called for every RTOS tick. */
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_TIMER
+  TMR_OnInterrupt();
+#endif
 }
 
 /*
