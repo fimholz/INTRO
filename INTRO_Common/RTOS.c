@@ -14,6 +14,7 @@
 #include "Application.h"
 #include "KeyDebounce.h"
 
+#if 0
 static void LedTask(void* param) {
   const int *whichLED = (int*)param;
 
@@ -28,6 +29,7 @@ static void LedTask(void* param) {
     FRTOS1_vTaskDelay(pdMS_TO_TICKS(500));
   }
 }
+#endif
 
 static void AppTask(void *param) {
   for(;;) {
@@ -46,9 +48,10 @@ static void AppTask(void *param) {
 }
 
 void RTOS_Init(void) {
+#if 0
   static const int led1 = 1;
   static const int led2 = 2;
-
+#endif
   EVNT_SetEvent(EVNT_STARTUP); /* set startup event */
 #if 0
   /*! \todo Create tasks here */
@@ -59,7 +62,7 @@ void RTOS_Init(void) {
     for(;;){} /* error case only, stay here! */
   }
 #endif
-  if (FRTOS1_xTaskCreate(AppTask, (uint8_t *)"App", configMINIMAL_STACK_SIZE, (void*)&led2, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+  if (FRTOS1_xTaskCreate(AppTask, (uint8_t *)"App", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
     for(;;){} /* error case only, stay here! */
   }
 }

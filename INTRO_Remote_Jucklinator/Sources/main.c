@@ -90,6 +90,11 @@ int main(void)
   /*** End of Processor Expert internal initialization.                    ***/
 
   /* Write your code here */
+#if 0
+  for(;;) {
+    RTT1_WriteString(0, "hello\r\n");
+  }
+#endif
   APP_Start();
   /* For example: for(;;) { } */
 
