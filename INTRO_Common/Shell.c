@@ -80,11 +80,10 @@
 #include "KIN1.h"
 
 #define SHELL_HANDLER_ARRAY   1
-#define SHELL_CONFIG_HAS_SHELL_EXTRA_CDC   (0 && PL_CONFIG_HAS_USB_CDC)
+#define SHELL_CONFIG_HAS_SHELL_EXTRA_CDC   (1 && PL_CONFIG_HAS_USB_CDC)
 #define SHELL_CONFIG_HAS_SHELL_EXTRA_RTT   (1 && PL_CONFIG_HAS_SEGGER_RTT)
 #define SHELL_CONFIG_HAS_SHELL_EXTRA_BT    (0 && PL_CONFIG_HAS_BLUETOOTH)
 #define SHELL_CONFIG_HAS_SHELL_EXTRA_UART  (0)
-
 
 #if SHELL_HANDLER_ARRAY
 typedef struct {
@@ -291,10 +290,10 @@ static void ShellTask(void *pvParameters) {
     ios[i].buf[0] = '\0';
   }
 #endif
+  SHELL_SendString("Shell task stared!\r\n");
 #if CLS1_DEFAULT_SERIAL
   (void)CLS1_ParseWithCommandTable((unsigned char*)CLS1_CMD_HELP, ios[0].stdio, CmdParserTable);
 #endif
-
   for(;;) {
 #if SHELL_HANDLER_ARRAY
     /* process all I/Os */
@@ -305,7 +304,12 @@ static void ShellTask(void *pvParameters) {
 #if PL_CONFIG_HAS_SHELL_QUEUE
 #if PL_CONFIG_SQUEUE_SINGLE_CHAR
     {
-        /*! \todo Handle shell queue */
+      /*! \todo Handle shell queue */
+      unsigned char ch;
+
+      while((ch=SQUEUE_ReceiveChar()) && ch!='\0') {
+        SHELL_GetStdio()->stdOut(ch);
+      }
     }
 #else /* PL_CONFIG_SQUEUE_SINGLE_CHAR */
     {

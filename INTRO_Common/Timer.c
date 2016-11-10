@@ -18,6 +18,7 @@
 #if PL_CONFIG_HAS_MOTOR_TACHO
   #include "Tacho.h"
 #endif
+#include "TMOUT1.h"
 
 void TMR_OnInterrupt(void) {
   /* this one gets called from an interrupt!!!! */
@@ -33,6 +34,7 @@ void TMR_OnInterrupt(void) {
 #if PL_CONFIG_HAS_TRIGGER
   TRG_AddTick();
 #endif
+  TMOUT1_AddTick();
 }
 
 void TMR_Init(void) {
