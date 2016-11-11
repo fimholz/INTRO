@@ -64,6 +64,8 @@
 #include "BitIoLdd10.h"
 #include "IR6.h"
 #include "BitIoLdd11.h"
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
 #include "USB1.h"
 #include "CDC1.h"
 #include "Tx1.h"
