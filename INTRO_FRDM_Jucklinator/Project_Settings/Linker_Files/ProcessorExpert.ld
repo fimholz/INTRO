@@ -10,7 +10,7 @@
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2016-09-30, 13:52, # CodeGen: 0 */
+/*##     Date/Time : 2016-11-11, 16:05, # CodeGen: 35 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */
@@ -38,8 +38,9 @@ __stack_size = 0x0400;                 /* required amount of stack */
 
 MEMORY {
   m_interrupts (RX) : ORIGIN = 0x00000000, LENGTH = 0x000000C0
-  m_text      (RX) : ORIGIN = 0x00000410, LENGTH = 0x0001FBF0
+  m_text      (RX) : ORIGIN = 0x00000410, LENGTH = 0x0001F7F0
   m_data      (RW) : ORIGIN = 0x1FFFF000, LENGTH = 0x00004000
+  NVM_Config  (RW) : ORIGIN = 0x0001FC00, LENGTH = 0x00000400
   m_cfmprotrom  (RX) : ORIGIN = 0x00000400, LENGTH = 0x00000010
 }
 
@@ -168,6 +169,18 @@ SECTIONS
   } > m_data
 
   ___data_size = _edata - _sdata;
+  ___NVM_Config_ROMStart = ___ROM_AT + SIZEOF(.data);
+  .NVM_Config : AT(___NVM_Config_ROMStart)
+  {
+     . = ALIGN(4);
+     ___NVM_Config_RAMStart = .;
+     *(.NVM_Config) /* This is an User defined section */
+     ___NVM_Config_RAMEnd = .;
+     . = ALIGN(4);
+  } > NVM_Config
+  ___NVM_Config_ROMSize = ___NVM_Config_RAMEnd - ___NVM_Config_RAMStart;
+
+
   
   /* Uninitialized data section */
   . = ALIGN(4);
@@ -186,20 +199,23 @@ SECTIONS
  	  PROVIDE ( __bss_end__ = __END_BSS );
   } > m_data
 
-  _romp_at = ___ROM_AT + SIZEOF(.data);
+  _romp_at = ___ROM_AT + SIZEOF(.data) +SIZEOF(.NVM_Config);
   .romp : AT(_romp_at)
   {
     __S_romp = _romp_at;
     LONG(___ROM_AT);
     LONG(_sdata);
     LONG(___data_size);
+    LONG(___NVM_Config_ROMStart);
+    LONG(___NVM_Config_RAMStart);
+    LONG(___NVM_Config_ROMSize);
     LONG(0);
     LONG(0);
     LONG(0);
   } > m_data
   
   text_end = ORIGIN(m_text) + LENGTH(m_text);
-  data_init_end = ___ROM_AT + SIZEOF(.data) + SIZEOF(.romp);
+  data_init_end = ___NVM_Config_ROMStart + SIZEOF(.NVM_Config) + SIZEOF(.romp);
   ASSERT( data_init_end <= text_end, "region m_text overflowed with text and data")
   
   /* User_heap_stack section, used to check that there is enough RAM left */
