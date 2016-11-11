@@ -61,6 +61,8 @@
 #include "ASerialLdd1.h"
 #include "RTT1.h"
 #include "SYS1.h"
+#include "IFsh1.h"
+#include "IntFlashLdd1.h"
 #include "FRTOS1.h"
 #include "TMOUT1.h"
 #include "USB1.h"
