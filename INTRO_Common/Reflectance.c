@@ -574,7 +574,7 @@ static void ReflTask (void *pvParameters) {
   (void)pvParameters; /* not used */
   for(;;) {
     REF_StateMachine();
-    FRTOS1_vTaskDelay(10/portTICK_PERIOD_MS);
+    FRTOS1_vTaskDelay(100/portTICK_PERIOD_MS);
   }
 }
 
