@@ -33,9 +33,9 @@ static void vSlaveTask(void *pvParameters) {
   }
   for(;;) {
     /*! \todo Implement functionality */
-	  if(xSemaphoreTake(sem, portMAX_DELAY)==pdPASS) { /* block on semaphore */
-		  LED1_Neg();
-	  }
+    if (xSemaphoreTake(sem, portMAX_DELAY)==pdPASS) { /* block on semaphore */
+      LED1_Neg();
+    }
   }
 }
 

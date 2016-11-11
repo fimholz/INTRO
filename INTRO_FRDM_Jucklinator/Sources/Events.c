@@ -90,9 +90,7 @@ void TI1_OnInterrupt(void)
 */
 void SW7_OnInterrupt(void)
 {
-#if PL_CONFIG_HAS_KBI
-  KEY_OnInterrupt(KEY_BTN7);
-#endif
+  /* Write your code here ... */
 }
 
 /*
@@ -214,7 +212,9 @@ void FRTOS1_vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
 void FRTOS1_vApplicationTickHook(void)
 {
   /* Called for every RTOS tick. */
-  /* Write your code here ... */
+#if PL_CONFIG_HAS_TIMER
+  TMR_OnInterrupt();
+#endif
 }
 
 /*
