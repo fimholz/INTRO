@@ -52,13 +52,16 @@ void APP_EventHandler(EVNT_Handle event) {
     LED1_Off();
     break;
   case EVNT_LED_HEARTBEAT:
-    //LED1_Neg();
+    LED1_Neg();
     break;
 
 #if PL_CONFIG_HAS_KEYS
   #if PL_CONFIG_NOF_KEYS>=1
   case EVNT_SW1_PRESSED:
     LED1_Neg();
+    #if PL_CONFIG_HAS_REFLECTANCE
+      REF_CalibrateStartStop();
+    #endif
     //CLS1_SendStr("SW1 pressed\r\n", CLS1_GetStdio()->stdOut);
     SHELL_SendString("SW1 pressed\r\n");
     #if PL_CONFIG_HAS_BUZZER
@@ -127,7 +130,8 @@ static void APP_AdoptToHardware(void) {
   }
 #if PL_CONFIG_HAS_MOTOR
   if (KIN1_UIDSame(&id, &RoboIDs[2])) { /* L4 */
-    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), TRUE); /* revert left motor */
+	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), TRUE); /* revert left motor */
+	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), TRUE); /* revert left motor */
     (void)Q4CLeft_SwapPins(TRUE);
     (void)Q4CRight_SwapPins(TRUE);
   }
