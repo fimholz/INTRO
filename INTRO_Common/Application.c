@@ -130,8 +130,8 @@ static void APP_AdoptToHardware(void) {
   }
 #if PL_CONFIG_HAS_MOTOR
   if (KIN1_UIDSame(&id, &RoboIDs[2])) { /* L4 */
-	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), TRUE); /* revert left motor */
-	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), TRUE); /* revert left motor */
+	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_LEFT), FALSE); /* revert left motor */
+	    MOT_Invert(MOT_GetMotorHandle(MOT_MOTOR_RIGHT), FALSE); /* revert left motor */
     (void)Q4CLeft_SwapPins(TRUE);
     (void)Q4CRight_SwapPins(TRUE);
   }

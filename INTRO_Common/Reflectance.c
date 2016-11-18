@@ -40,6 +40,11 @@
   static xSemaphoreHandle REF_StartStopSem = NULL;
 #endif
 
+#define REF_MUTEX_MEASURE_RAW      1 /* mutex commands */
+#if REF_MUTEX_MEASURE_RAW
+  static xSemaphoreHandle REF_Mutex_Measure_Raw = NULL;
+#endif
+
 typedef enum {
   REF_STATE_INIT,
   REF_STATE_NOT_CALIBRATED,
@@ -141,33 +146,43 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
   uint8_t i;
   RefCnt_TValueType timerVal;
   /*! \todo Consider reentrancy and mutual exclusion! */
+  CS1_CriticalVariable();
 
-  LED_IR_On(); /* IR LED's on */
-  WAIT1_Waitus(200);
-  for(i=0;i<REF_NOF_SENSORS;i++) {
-    SensorFctArray[i].SetOutput(); /* turn I/O line as output */
-    SensorFctArray[i].SetVal(); /* put high */
-    raw[i] = MAX_SENSOR_VALUE;
+  if(FRTOS1_xSemaphoreTake(REF_Mutex_Measure_Raw, portMAX_DELAY)==pdPASS){
+
+	  LED_IR_On(); /* IR LED's on */
+	  WAIT1_Waitus(200);
+
+	  CS1_EnterCritical();
+
+	  for(i=0;i<REF_NOF_SENSORS;i++) {
+		SensorFctArray[i].SetOutput(); /* turn I/O line as output */
+		SensorFctArray[i].SetVal(); /* put high */
+		raw[i] = MAX_SENSOR_VALUE;
+	  }
+	  WAIT1_Waitus(50); /* give at least 10 us to charge the capacitor */
+	  for(i=0;i<REF_NOF_SENSORS;i++) {
+		SensorFctArray[i].SetInput(); /* turn I/O line as input */
+	  }
+	  (void)RefCnt_ResetCounter(timerHandle); /* reset timer counter */
+	  do {
+		timerVal = RefCnt_GetCounterValue(timerHandle);
+		cnt = 0;
+		for(i=0;i<REF_NOF_SENSORS;i++) {
+		  if (raw[i]==MAX_SENSOR_VALUE) { /* not measured yet? */
+			if (SensorFctArray[i].GetVal()==0) {
+			  raw[i] = (uint16_t)timerVal;
+			}
+		  } else { /* have value */
+			cnt++;
+		  }
+		}
+	  } while((cnt!=REF_NOF_SENSORS)&&(timerVal <= 14000));
+	  CS1_ExitCritical();
+	  LED_IR_Off(); /* IR LED's off */
+
+  FRTOS1_xSemaphoreGive(REF_Mutex_Measure_Raw);
   }
-  WAIT1_Waitus(50); /* give at least 10 us to charge the capacitor */
-  for(i=0;i<REF_NOF_SENSORS;i++) {
-    SensorFctArray[i].SetInput(); /* turn I/O line as input */
-  }
-  (void)RefCnt_ResetCounter(timerHandle); /* reset timer counter */
-  do {
-    timerVal = RefCnt_GetCounterValue(timerHandle);
-    cnt = 0;
-    for(i=0;i<REF_NOF_SENSORS;i++) {
-      if (raw[i]==MAX_SENSOR_VALUE) { /* not measured yet? */
-        if (SensorFctArray[i].GetVal()==0) {
-          raw[i] = (uint16_t)timerVal;
-        }
-      } else { /* have value */
-        cnt++;
-      }
-    }
-  } while(cnt!=REF_NOF_SENSORS && timerVal < 65000);
-  LED_IR_Off(); /* IR LED's off */
 }
 
 static void REF_CalibrateMinMax(SensorTimeType min[REF_NOF_SENSORS], SensorTimeType max[REF_NOF_SENSORS], SensorTimeType raw[REF_NOF_SENSORS]) {
@@ -590,6 +605,17 @@ void REF_Init(void) {
   (void)FRTOS1_xSemaphoreTake(REF_StartStopSem, 0); /* empty token */
   FRTOS1_vQueueAddToRegistry(REF_StartStopSem, "RefStartStopSem");
 #endif
+
+#if REF_MUTEX_MEASURE_RAW
+  FRTOS1_vSemaphoreCreateBinary(REF_Mutex_Measure_Raw);
+  if (REF_Mutex_Measure_Raw==NULL) { /* semaphore creation failed */
+    for(;;){} /* error */
+  }
+  (void)FRTOS1_xSemaphoreTake(REF_Mutex_Measure_Raw, 0); /* empty token */
+  FRTOS1_vQueueAddToRegistry(REF_Mutex_Measure_Raw, "RefMutexMeasureRaw");
+  FRTOS1_xSemaphoreGive(REF_Mutex_Measure_Raw);
+#endif
+
   refState = REF_STATE_INIT;
   timerHandle = RefCnt_Init(NULL);
   /*! \todo You might need to adjust priority or other task settings */
