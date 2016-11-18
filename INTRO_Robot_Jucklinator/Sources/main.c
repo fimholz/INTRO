@@ -105,11 +105,6 @@
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "Application.h"
 
-void delay(void) {
-  volatile unsigned char i;
-
-  for(i=0;i<100;i++);
-}
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */

@@ -15,7 +15,6 @@
 #include "PWML.h"
 #include "UTIL1.h"
 
-
 static MOT_MotorDevice motorL, motorR;
 
 MOT_MotorDevice *MOT_GetMotorHandle(MOT_MotorSide side) {

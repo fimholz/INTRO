@@ -113,7 +113,7 @@ typedef struct {
     CLS1_KeyPressed /* if input is not empty */
   };
 
-  CLS1_ConstStdIOType *SHELL_GetStdio(void) {
+  static CLS1_ConstStdIOType *SHELL_GetStdio(void) {
     return &SHELL_stdio;
   }
 #else

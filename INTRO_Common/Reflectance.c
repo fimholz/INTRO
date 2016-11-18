@@ -160,7 +160,7 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
     for(i=0;i<REF_NOF_SENSORS;i++) {
       if (raw[i]==MAX_SENSOR_VALUE) { /* not measured yet? */
         if (SensorFctArray[i].GetVal()==0) {
-          raw[i] = timerVal;
+          raw[i] = (uint16_t)timerVal;
         }
       } else { /* have value */
         cnt++;
