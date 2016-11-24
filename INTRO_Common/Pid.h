@@ -37,6 +37,11 @@ void PID_Speed(int32_t currSpeed, int32_t setSpeed, bool isLeft);
  */
 void PID_Pos(int32_t currPos, int32_t setPos, bool isLeft);
 
+/*!
+ * \brief Performs PID closed loop calculation for line following
+ * \param currLine Current line position
+ * \param setLine Desired line position
+ */
 void PID_Line(uint16_t currLine, uint16_t setLine);
 
 /*! \brief Driver re-init and reset */

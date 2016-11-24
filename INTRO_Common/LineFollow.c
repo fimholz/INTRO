@@ -46,7 +46,7 @@ typedef enum {
 static volatile StateType LF_currState = STATE_IDLE;
 static xTaskHandle LFTaskHandle;
 #if PL_CONFIG_HAS_LINE_MAZE
-static uint8_t LF_solvedIdx = 0; /*  index to iterate through the solution, zero is the solution start index */
+  static uint8_t LF_solvedIdx = 0; /*  index to iterate through the solution, zero is the solution start index */
 #endif
 
 void LF_StartFollowing(void) {

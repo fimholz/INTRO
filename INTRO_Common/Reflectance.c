@@ -381,7 +381,7 @@ static unsigned char*REF_GetStateString(void) {
 }
 
 #if PL_CONFIG_HAS_LINE_FOLLOW
-unsigned char *REF_LineKindStr(REF_LineKind line) {
+static unsigned char *REF_LineKindStr(REF_LineKind line) {
   switch(line) {
   case REF_LINE_NONE:
     return (unsigned char *)"NONE";
