@@ -57,7 +57,7 @@ void APP_EventHandler(EVNT_Handle event) {
 
 #if PL_CONFIG_HAS_KEYS
   #if PL_CONFIG_NOF_KEYS>=1
-  case EVNT_SW1_PRESSED:
+  case EVNT_SW1_LPRESSED:
     LED1_Neg();
     #if PL_CONFIG_HAS_REFLECTANCE
       REF_CalibrateStartStop();
@@ -68,6 +68,13 @@ void APP_EventHandler(EVNT_Handle event) {
     BUZ_PlayTune(BUZ_TUNE_BUTTON);
     #endif
     break;
+  case EVNT_SW1_PRESSED:
+	#if PL_CONFIG_HAS_LINE_FOLLOW
+	  LF_StartStopFollowing();
+	#endif
+	#if PL_CONFIG_HAS_BUZZER
+	  BUZ_PlayTune(BUZ_TUNE_BUTTON);
+    #endif
   #endif
   #if PL_CONFIG_NOF_KEYS>=2
   case EVNT_SW2_PRESSED:
