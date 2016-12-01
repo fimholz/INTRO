@@ -27,7 +27,7 @@
 #endif
 
 /* \todo adopt the values for your robot */
-#define TURN_STEPS_90         400
+#define TURN_STEPS_90         700
   /*!< number of steps for a 90 degree turn */
 #define TURN_STEPS_LINE       100
   /*!< number of steps stepping over the line */
