@@ -27,9 +27,6 @@
 #if PL_CONFIG_HAS_DRIVE
   #include "Drive.h"
 #endif
-#if PL_CONFIG_HAS_LINE_MAZE
-  #include "Maze.h"
-#endif
 
 typedef enum {
   STATE_IDLE,              /* idle, not doing anything */
@@ -45,9 +42,6 @@ typedef enum {
 
 static volatile StateType LF_currState = STATE_IDLE;
 static xTaskHandle LFTaskHandle;
-#if PL_CONFIG_HAS_LINE_MAZE
-  static uint8_t LF_solvedIdx = 0; /*  index to iterate through the solution, zero is the solution start index */
-#endif
 
 void LF_StartFollowing(void) {
   (void)xTaskNotify(LFTaskHandle, LF_START_FOLLOWING, eSetBits);
@@ -65,6 +59,7 @@ void LF_StartStopFollowing(void) {
   }
 }
 
+/* forward declaration */
 static void StateMachine(void);
 
 /*!
@@ -91,32 +86,20 @@ static void StateMachine(void) {
       break;
     case STATE_FOLLOW_SEGMENT:
       if (!FollowSegment()) {
-    #if PL_CONFIG_HAS_LINE_MAZE
-        LF_currState = STATE_TURN; /* make turn */
-        SHELL_SendString((unsigned char*)"no line, turn..\r\n");
-    #else
-        LF_currState = STATE_STOP; /* stop if we do not have a line any more */
         SHELL_SendString((unsigned char*)"No line, stopped!\r\n");
-    #endif
+        LF_currState = STATE_STOP; /* stop if we do not have a line any more */
       }
       break;
 
     case STATE_TURN:
-      #if PL_CONFIG_HAS_LINE_MAZE
-      /*! \todo Handle maze turning */
-      #endif /* PL_CONFIG_HAS_LINE_MAZE */
       break;
 
     case STATE_FINISHED:
-      #if PL_CONFIG_HAS_LINE_MAZE
-      /*! \todo Handle maze finished */
-      #endif /* PL_CONFIG_HAS_LINE_MAZE */
       break;
+
     case STATE_STOP:
       SHELL_SendString("Stopped!\r\n");
-#if PL_CONFIG_HAS_TURN
       TURN_Turn(TURN_STOP, NULL);
-#endif
       LF_currState = STATE_IDLE;
       break;
   } /* switch */

@@ -77,7 +77,7 @@ void TACHO_CalcSpeed(void) {
     deltaRight = -deltaRight;
     negRight = TRUE;
   } else {
-    negRight = TRUE;
+    negRight = FALSE;
   }
   /* calculate speed. this is based on the delta and the time (number of samples or entries in the history table) */
   speedLeft = (int32_t)(deltaLeft * 1000/(TACHO_SAMPLE_PERIOD_MS*(NOF_HISTORY-1)));

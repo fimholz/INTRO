@@ -64,7 +64,7 @@
 #define PL_LOCAL_CONFIG_HAS_QUAD_CALIBRATION_DISABLED     /* disable quadrature calibration (only for V1 robot) */
 //#define PL_LOCAL_CONFIG_HAS_PID_DISABLED                  /* disable PID */
 //#define PL_LOCAL_CONFIG_HAS_DRIVE_DISABLED                /* disable drive module */
-#define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
+//#define PL_LOCAL_CONFIG_HAS_TURN_DISABLED                 /* disable turning module */
 //#define PL_LOCAL_CONFIG_HAS_LINE_FOLLOW_DISABLED          /* disable line following */
 #define PL_LOCAL_CONFIG_HAS_LINE_MAZE_DISABLED            /* disable maze solving */
 
