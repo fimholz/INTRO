@@ -86,12 +86,21 @@ static void StateMachine(void) {
       break;
     case STATE_FOLLOW_SEGMENT:
       if (!FollowSegment()) {
-        SHELL_SendString((unsigned char*)"No line, stopped!\r\n");
-        LF_currState = STATE_STOP; /* stop if we do not have a line any more */
+        SHELL_SendString((unsigned char*)"No line detected!\r\n");
+        if(REF_GetLineKind()==REF_LINE_FULL){
+        	LF_currState = STATE_STOP;
+        }else{
+        	SHELL_SendString((unsigned char*)"TURN 180 Grad!\r\n");
+        	LF_currState = STATE_TURN; /* stop if we do not have a line any more */
+        }
       }
       break;
 
     case STATE_TURN:
+    	TURN_Turn(TURN_RIGHT180,NULL);
+    	DRV_SetMode(DRV_MODE_NONE);
+    	PID_Start();
+    	LF_currState = STATE_FOLLOW_SEGMENT;
       break;
 
     case STATE_FINISHED:

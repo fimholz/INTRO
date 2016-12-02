@@ -143,6 +143,9 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
   RefCnt_TValueType timerVal;
   /*! \todo Consider reentrancy and mutual exclusion! */
 
+  CS1_CriticalVariable();
+
+
   (void)xSemaphoreTake(mutexHandle, portMAX_DELAY);
   LED_IR_On(); /* IR LED's on */
   WAIT1_Waitus(200);
@@ -151,6 +154,10 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
     SensorFctArray[i].SetVal(); /* put high */
     raw[i] = MAX_SENSOR_VALUE;
   }
+
+  CS1_EnterCritical();
+
+
   WAIT1_Waitus(50); /* give at least 10 us to charge the capacitor */
   for(i=0;i<REF_NOF_SENSORS;i++) {
     SensorFctArray[i].SetInput(); /* turn I/O line as input */
@@ -168,7 +175,8 @@ static void REF_MeasureRaw(SensorTimeType raw[REF_NOF_SENSORS]) {
         cnt++;
       }
     }
-  } while((cnt!=REF_NOF_SENSORS) && (timerVal <= 14000));
+  } while((cnt!=REF_NOF_SENSORS) && (timerVal <= 64000)); //timerVal gilt als Abbruchbedingung für den RefCnt Timer
+  CS1_ExitCritical();
   LED_IR_Off(); /* IR LED's off */
   (void)xSemaphoreGive(mutexHandle);
 }
