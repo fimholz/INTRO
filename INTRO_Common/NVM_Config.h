@@ -14,12 +14,14 @@
 #if PL_CONFIG_HAS_CONFIG_NVM
 
 #if PL_CONFIG_BOARD_IS_FRDM
-  #define NVMC_FLASH_START_ADDR    0x1FC00 
   /*!< NVRM_Config, start address of configuration data in flash */
 #elif PL_CONFIG_BOARD_IS_ROBO
   #define NVMC_FLASH_START_ADDR    0x10000000 /* DFLASH, NVRM_Config, start address of configuration data in flash */
   #define NVMC_FLASH_BLOCK_SIZE    0x1000     /* IntFlashLdd1_BLOCK0_ERASABLE_UNIT_SIZE */
   /*!< NVRM_Config, start address of configuration data in flash */
+#elif PL_CONFIG_BOARD_IS_REMOTE
+  #define NVMC_FLASH_START_ADDR    0x10000000 /* DFLASH, NVRM_Config, start address of configuration data in flash */
+  #define NVMC_FLASH_BLOCK_SIZE    0x400     /* IntFlashLdd1_BLOCK0_ERASABLE_UNIT_SIZE */
 #else /* \todo add your other hardware */
   #error "unknown target?"
 #endif

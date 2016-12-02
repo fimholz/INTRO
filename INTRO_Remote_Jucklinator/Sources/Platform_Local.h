@@ -45,7 +45,7 @@
 //#define PL_LOCAL_CONFIG_HAS_CONFIG_NVM_DISABLED           /* disable NVM storage */
 
 /* remote controller hardware functionality */
-#define PL_LOCAL_CONFIG_HAS_RADIO_DISABLED                /* disable Radio transceiver */
+//#define PL_LOCAL_CONFIG_HAS_RADIO_DISABLED                /* disable Radio transceiver */
 #define PL_LOCAL_CONFIG_HAS_REMOTE_STDIO_DISABLED         /* disable Std I/O over radio */
 #define PL_LOCAL_CONFIG_HAS_REMOTE_DISABLED               /* disable remote controller (sender and receiver) */
 #define PL_LOCAL_CONFIG_HAS_CONTROL_SENDER_DISABLED       /* disable that we are the sender (otherwise we are the receiver) */
