@@ -113,7 +113,7 @@ typedef struct {
     CLS1_KeyPressed /* if input is not empty */
   };
 
-  static CLS1_ConstStdIOType *SHELL_GetStdio(void) {
+  CLS1_ConstStdIOType *SHELL_GetStdio(void) {
     return &SHELL_stdio;
   }
 #else
@@ -276,14 +276,25 @@ static uint8_t SHELL_ParseCommand(const unsigned char *cmd, bool *handled, const
   return ERR_OK;
 }
 
+void SHELL_ParseCmd(uint8_t *cmd) {
+  (void)CLS1_ParseWithCommandTable(cmd, ios[0].stdio, CmdParserTable);
+}
+
 #if PL_CONFIG_HAS_RTOS
 static void ShellTask(void *pvParameters) {
+#if RNET_CONFIG_REMOTE_STDIO
+  static unsigned char radio_cmd_buf[48];
+  CLS1_ConstStdIOType *ioRemote = RSTDIO_GetStdioRx();
+#endif
 #if SHELL_HANDLER_ARRAY
   int i;
 #endif
   /* \todo Extend as needed */
 
   (void)pvParameters; /* not used */
+#if RNET_CONFIG_REMOTE_STDIO
+  radio_cmd_buf[0] = '\0';
+#endif
 #if SHELL_HANDLER_ARRAY
   /* initialize buffers */
   for(i=0;i<sizeof(ios)/sizeof(ios[0]);i++) {
@@ -301,6 +312,10 @@ static void ShellTask(void *pvParameters) {
       (void)CLS1_ReadAndParseWithCommandTable(ios[i].buf, ios[i].bufSize, ios[i].stdio, CmdParserTable);
     }
 #endif
+#if RNET_CONFIG_REMOTE_STDIO
+    RSTDIO_Print(&SHELL_stdio); /* dispatch incoming messages */
+    (void)CLS1_ReadAndParseWithCommandTable(radio_cmd_buf, sizeof(radio_cmd_buf), ioRemote, CmdParserTable);
+#endif
 #if PL_CONFIG_HAS_SHELL_QUEUE
 #if PL_CONFIG_SQUEUE_SINGLE_CHAR
     {
@@ -317,7 +332,7 @@ static void ShellTask(void *pvParameters) {
 
       msg = SQUEUE_ReceiveMessage();
       if (msg!=NULL) {
-        CLS1_SendStr(msg, CLS1_GetStdio()->stdOut);
+        CLS1_SendStr(msg, SHELL_GetStdio()->stdOut);
         FRTOS1_vPortFree((void*)msg);
       }
     }

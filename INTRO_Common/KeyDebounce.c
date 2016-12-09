@@ -8,12 +8,11 @@
 
 #include "Platform.h"
 #if PL_CONFIG_HAS_DEBOUNCE
-
+#include "KeyDebounce.h"
 #include "Keys.h"
 #include "Debounce.h"
 #include "Trigger.h"
 #include "Event.h"
-#include "KeyDebounce.h"
 
 /*!
  * \brief Returns the state of the keys. This directly reflects the value of the port

@@ -8,8 +8,6 @@
 #define SOURCES_INTRO_COMMON_PLATFORM_H_
 
 /* include shared header files */
-#include <stdint.h> /* types as uint8_t used in project */
-#include <stdbool.h> /* for bool type */
 #include "PE_Types.h" /* common Processor Expert types: bool, NULL, ... */
 #include "Cpu.h" /* for PEcfg_RoboV2/PEcfg_RoboV1 */
 
@@ -77,7 +75,7 @@
 #define PL_CONFIG_HAS_LCD               (1 && !defined(PL_LOCAL_CONFIG_HAS_LCD_DISABLED))
 #define PL_CONFIG_HAS_LCD_MENU          (1 && !defined(PL_LOCAL_CONFIG_HAS_LCD_MENU_DISABLED) && PL_CONFIG_HAS_LCD)
 #define PL_CONFIG_HAS_REMOTE            (1 && !defined(PL_LOCAL_CONFIG_HAS_REMOTE_DISABLED))
-#define PL_CONFIG_CONTROL_SENDER        (1 && !defined(PL_LOCAL_CONFIG_HAS_CONTROL_SENDER_DISABLED) && PL_CONFIG_BOARD_IS_FRDM)
+#define PL_CONFIG_CONTROL_SENDER        (1 && !defined(PL_LOCAL_CONFIG_HAS_CONTROL_SENDER_DISABLED))
 #define PL_CONFIG_HAS_JOYSTICK          (1 && !defined(PL_LOCAL_CONFIG_HAS_JOYSTICK_DISABLED) && PL_CONFIG_BOARD_IS_FRDM)
 
 /* robot specific features: */
