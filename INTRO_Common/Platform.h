@@ -8,6 +8,8 @@
 #define SOURCES_INTRO_COMMON_PLATFORM_H_
 
 /* include shared header files */
+#include <stdint.h> /* types as uint8_t used in project */
+#include <stdbool.h> /* for bool type */
 #include "PE_Types.h" /* common Processor Expert types: bool, NULL, ... */
 #include "Cpu.h" /* for PEcfg_RoboV2/PEcfg_RoboV1 */
 
