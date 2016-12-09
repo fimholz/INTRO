@@ -39,6 +39,9 @@
 #if PL_CONFIG_HAS_LINE_FOLLOW
   #include "LineFollow.h"
 #endif
+#if PL_CONFIG_HAS_LCD_MENU
+  #include "LCD.h"
+#endif
 
 #if PL_CONFIG_HAS_EVENTS
 void APP_EventHandler(EVNT_Handle event) {
@@ -52,9 +55,11 @@ void APP_EventHandler(EVNT_Handle event) {
     WAIT1_Waitms(500);
     break;
   case EVNT_LED_OFF:
+	EVNT_ClearEvent(EVNT_LED_OFF);
     LED1_Off();
     break;
   case EVNT_LED_HEARTBEAT:
+	EVNT_ClearEvent(EVNT_LED_HEARTBEAT);
     LED1_Neg();
     break;
 

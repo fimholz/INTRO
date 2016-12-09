@@ -22,6 +22,7 @@ typedef struct {
   const LCDMenu_MenuItem *menus; /* pointer to array of menu items */
   uint16_t nofMenuItems;   /* number of menu items */
   uint8_t selectedID;  /* currently selected menu ID */
+  uint8_t editID;  /* currently edited ID, or LCDMENU_ID_NONE if not in edit mode */
   uint8_t topGroup, topPos;   /* display top position */
 } LCDMenu_Status;
 
@@ -31,6 +32,7 @@ void LCDMenu_InitMenu(const LCDMenu_MenuItem *menus, uint8_t nofMenuItems, uint8
   menuStatus.menus = menus;
   menuStatus.nofMenuItems = nofMenuItems;
   menuStatus.selectedID = selectedID;
+  menuStatus.editID = LCDMENU_ID_NONE;
   menuStatus.topGroup = LCDMENU_GROUP_ROOT;
   menuStatus.topPos = 0;
 }
@@ -76,7 +78,7 @@ static uint16_t LCDMenu_NofMenuItemsInGroup(uint8_t group) {
   return cntr; /* return number of items found */
 }
 
-void LCDMenu_Draw(void) {
+static void LCDMenu_Draw(void) {
   PGFONT_Callbacks font;
   FDisp1_PixelDim x, y;
   FDisp1_PixelDim charHeight, fontHeight;
@@ -88,7 +90,6 @@ void LCDMenu_Draw(void) {
   FDisp1_PixelDim charWidth, totalWidth;
   FDisp1_PixelDim scrollBarWidth;
   uint16_t nofTotalMenusOnLevel;
-  bool needRefresh;
 
   font = GFONT1_GetFont();
   FDisp1_GetFontHeight(font, &charHeight, &fontHeight);
@@ -114,12 +115,16 @@ void LCDMenu_Draw(void) {
     item = LCDMenu_GetGroupPosMenuItem(group, pos);
     if (item!=NULL) {
       x = 0;
-      text = item->menuText;
+      text = (uint8_t*)item->menuText;
       if (text==NULL && item->handler!=NULL) {
          text = NULL;
-         needRefresh = item->handler(item, LCDMENU_EVENT_GET_TEXT, (void**)&text);
+         if (item->id==menuStatus.editID) { /* it's for the item in edit mode */
+           (void)item->handler(item, LCDMENU_EVENT_GET_EDIT_TEXT, (void**)&text);
+         } else {
+           (void)item->handler(item, LCDMENU_EVENT_GET_TEXT, (void**)&text);
+         }
          if (text==NULL) {
-           text = "";
+           text = (uint8_t*)"";
          }
       }
       if (item->id == menuStatus.selectedID) { /* selected item */
@@ -128,10 +133,16 @@ void LCDMenu_Draw(void) {
       } else {
         textColor = GDisp1_COLOR_BLACK;
       }
-      /* up-menu indicator */
-      if (item->lvlUpID!=LCDMENU_ID_NONE) { /* there is a upper level menu: write indicator */
-        FDisp1_WriteChar(LCDMENU_UPMENU_INDICATOR_CHAR, textColor, &x, &y, font);
-      } else if (item->group>LCDMENU_GROUP_ROOT) { /* skip space, but not for root menu */
+      /* level up menu indicator */
+      if (item->lvlUpID!=LCDMENU_ID_NONE) { /* there is a upper level menu: write up indicator */
+        if (menuStatus.editID==item->id) { /* currently editing the item */
+          /* for edited item, do not write indicator: skip space for it */
+          FDisp1_GetCharWidth(LCDMENU_UPMENU_INDICATOR_CHAR, &charWidth, &totalWidth, font);
+          x += totalWidth;
+        } else {
+          FDisp1_WriteChar(LCDMENU_UPMENU_INDICATOR_CHAR, textColor, &x, &y, font);
+        }
+      } else if (item->group!=LCDMENU_GROUP_ROOT) { /* skip space, but not for root menu */
         FDisp1_GetCharWidth(LCDMENU_UPMENU_INDICATOR_CHAR, &charWidth, &totalWidth, font);
         x += totalWidth;
       }
@@ -149,128 +160,175 @@ void LCDMenu_Draw(void) {
   GDisp1_UpdateFull();
 }
 
-void LCDMenu_PreDraw(void) {
-  const LCDMenu_MenuItem *item;
-  uint16_t nofTotalMenusOnLevel;
-  uint8_t group, pos;
-  int i;
-  bool needRefresh;
-
-  group = menuStatus.topGroup;
-  pos = menuStatus.topPos;
-  nofTotalMenusOnLevel = LCDMenu_NofMenuItemsInGroup(group);
-  for(i=0; i<nofTotalMenusOnLevel; i++, pos++) {
-    item = LCDMenu_GetGroupPosMenuItem(group, pos);
-    if (item!=NULL && item->handler!=NULL) {
-      needRefresh = item->handler(item, LCDMENU_EVENT_PRE_DRAW, NULL); /* call handler so it can prepare */
-    }
-  } /* for */
-}
-
 static void LCDMenu_CursorUp(void) {
   const LCDMenu_MenuItem *item;
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
   item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get current item */
-  if (item!=NULL && item->pos>0) {
-    item = LCDMenu_GetGroupPosMenuItem(item->group, item->pos-1); /* get next possible item */
-    /* NULL if not found */
-  }
-  if (item !=NULL) {
-    menuStatus.selectedID = item->id;
-    if (item->pos<menuStatus.topPos) { /* check if outside visible area */
-      menuStatus.topPos = item->pos;
+  if (item!=NULL) {
+    if (item->handler!=NULL) { /* custom handler present */
+      flags |= item->handler(item, LCDMENU_EVENT_UP, NULL); /* call handler with event */
+      if ((item->flags&LCDMENU_MENU_FLAGS_EDITABLE) && menuStatus.editID==menuStatus.selectedID) { /* editable item and editing it? */
+        flags |= item->handler(item, LCDMENU_EVENT_INCREMENT, NULL); /* send edit event */
+      }
     }
-    LCDMenu_OnEvent(LCDMENU_EVENT_DRAW);
+    if (menuStatus.editID==LCDMENU_ID_NONE) { /* we are currently not editing it */
+      if (item->pos>0) {
+        item = LCDMenu_GetGroupPosMenuItem(item->group, item->pos-1); /* get next possible item */
+        /* returns NULL if not found */
+      }
+      if (item !=NULL) {
+        menuStatus.selectedID = item->id;
+        if (item->pos<menuStatus.topPos) { /* check if outside visible area */
+          menuStatus.topPos = item->pos;
+        }
+        flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
+      }
+    }
+    if (flags&LCDMENU_STATUS_FLAGS_UPDATE_VIEW) { /* need to update view? */
+      LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, item);
+    }
   }
 }
 
 static void LCDMenu_CursorDown(void) {
   const LCDMenu_MenuItem *item;
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
   item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get current item */
   if (item!=NULL) {
-    item = LCDMenu_GetGroupPosMenuItem(item->group, item->pos+1); /* get next possible item */
-    /* NULL if not found */
-  }
-  if (item!=NULL) { /* yes, it exists */
-    menuStatus.selectedID = item->id;
-    if (item->pos>=LCDMENU_NOF_MENU_LINES) { /* check if outside visible area */
-      menuStatus.topPos = item->pos-LCDMENU_NOF_MENU_LINES+1;
+    if (item->handler!=NULL) { /* custom handler present */
+      flags |= item->handler(item, LCDMENU_EVENT_DOWN, NULL); /* call handler with event */
+      if ((item->flags&LCDMENU_MENU_FLAGS_EDITABLE) && menuStatus.editID==menuStatus.selectedID) { /* editable item and editing it? */
+        flags |= item->handler(item, LCDMENU_EVENT_DECREMENT, NULL); /* send edit event */
+      }
     }
-    LCDMenu_OnEvent(LCDMENU_EVENT_DRAW);
+    if (menuStatus.editID==LCDMENU_ID_NONE) { /* we are currently not editing it. */
+      item = LCDMenu_GetGroupPosMenuItem(item->group, item->pos+1); /* get next possible item */
+      /* returns NULL if not found */
+      if (item!=NULL) { /* yes, it exists */
+        menuStatus.selectedID = item->id;
+        if (item->pos>=LCDMENU_NOF_MENU_LINES) { /* check if outside visible area */
+          menuStatus.topPos = item->pos-LCDMENU_NOF_MENU_LINES+1;
+        }
+        flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
+      }
+    }
+    if (flags&LCDMENU_STATUS_FLAGS_UPDATE_VIEW) { /* need to update view? */
+      LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, item);
+    }
   }
 }
 
 static void LCDMenu_CursorRight(void) {
   const LCDMenu_MenuItem *item;
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
   item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get current item */
-  if (item!=NULL && item->lvlDownID!=LCDMENU_ID_NONE) {
-    item = LCDMenu_GeIdMenuItem(item->lvlDownID); /* get target item */
-    menuStatus.selectedID = item->id;
-    menuStatus.topGroup = item->group;
-    menuStatus.topPos = 0;
-    LCDMenu_OnEvent(LCDMENU_EVENT_DRAW);
+  if (item!=NULL) {
+    if (item->handler!=NULL) { /* custom handler present? */
+      flags |= item->handler(item, LCDMENU_EVENT_RIGHT, NULL); /* send notification */
+      if ((item->flags&LCDMENU_MENU_FLAGS_EDITABLE) && menuStatus.editID==menuStatus.selectedID) { /* editable item and already editing it? */
+        flags |= item->handler(item, LCDMENU_EVENT_INCREMENT, NULL); /* send edit event */
+      }
+    }
+    if (menuStatus.editID==LCDMENU_ID_NONE && item->lvlDownID!=LCDMENU_ID_NONE) { /* we are currently not editing it, and it has a sub menu item? go down menu structure */
+      item = LCDMenu_GeIdMenuItem(item->lvlDownID); /* get target item */
+      menuStatus.selectedID = item->id;
+      menuStatus.topGroup = item->group;
+      menuStatus.topPos = 0;
+      flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
+    }
+    if (flags&LCDMENU_STATUS_FLAGS_UPDATE_VIEW) { /* need to update view? */
+      LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, item);
+    }
   }
 }
 
 static void LCDMenu_CursorLeft(void) {
   const LCDMenu_MenuItem *item;
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
   item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get current item */
-  if (item!=NULL && item->lvlUpID!=LCDMENU_ID_NONE) {
-    item = LCDMenu_GeIdMenuItem(item->lvlUpID); /* get target item */
-    menuStatus.selectedID = item->id;
-    menuStatus.topGroup = item->group;
-    if (item->pos>=LCDMENU_NOF_MENU_LINES) { /* check if outside visible area */
-      menuStatus.topPos = item->pos-LCDMENU_NOF_MENU_LINES+1;
-    } else {
-      menuStatus.topPos = 0;
+  if (item!=NULL) {
+    if (item->handler!=NULL) { /* custom handler present? */
+      flags |= item->handler(item, LCDMENU_EVENT_LEFT, NULL); /* send notification */
+      if ((item->flags&LCDMENU_MENU_FLAGS_EDITABLE) && menuStatus.editID==menuStatus.selectedID) { /* editable item and editing it? */
+        flags |= item->handler(item, LCDMENU_EVENT_DECREMENT, NULL); /* send edit event */
+      }
     }
-    LCDMenu_OnEvent(LCDMENU_EVENT_DRAW);
+    if (menuStatus.editID==LCDMENU_ID_NONE && item->lvlUpID!=LCDMENU_ID_NONE) { /* we are currently not ediging, and havinig a menu on the upper level? */
+      item = LCDMenu_GeIdMenuItem(item->lvlUpID); /* get target item */
+      menuStatus.selectedID = item->id;
+      menuStatus.topGroup = item->group;
+      if (item->pos>=LCDMENU_NOF_MENU_LINES) { /* check if outside visible area */
+        menuStatus.topPos = item->pos-LCDMENU_NOF_MENU_LINES+1;
+      } else {
+        menuStatus.topPos = 0;
+      }
+      flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
+    }
+    if (flags&LCDMENU_STATUS_FLAGS_UPDATE_VIEW) { /* need to update view? */
+      LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, item);
+    }
   }
 }
 
 static void LCDMenu_CursorEnter(void) {
   const LCDMenu_MenuItem *item;
-  bool needRefresh;
+  LCDMenu_StatusFlags flags = LCDMENU_STATUS_FLAGS_NONE;
 
-  item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get current item */
+  item = LCDMenu_GeIdMenuItem(menuStatus.selectedID); /* get currently selected menu item */
   if (item!=NULL) {
-    if (item->handler!=NULL) { /* custom handler */
-      needRefresh = item->handler(item, LCDMENU_EVENT_ENTER, NULL);
-      if (needRefresh) {
-        LCDMenu_OnEvent(LCDMENU_EVENT_DRAW);
+    /* process ENTER action */
+    if (item->handler!=NULL) { /* send notification to handler */
+      flags |= item->handler(item, LCDMENU_EVENT_ENTER, NULL);
+    }
+    if (menuStatus.editID==LCDMENU_ID_NONE && item->lvlDownID!=LCDMENU_ID_NONE) { /* we are not editing it, and enter on a menu item with a sub-menu: go down in menu hierarchy */
+      LCDMenu_OnEvent(LCDMENU_EVENT_RIGHT, NULL); /* emulate key: go down one menu level */
+    } else if (item->flags&LCDMENU_MENU_FLAGS_EDITABLE) { /* enter on an editable item? */
+      if (menuStatus.editID==menuStatus.selectedID) { /* is it already in edit mode? */
+        menuStatus.editID = LCDMENU_ID_NONE; /* de-select it for edit */
+        flags |= item->handler(item, LCDMENU_EVENT_EXIT_EDIT, NULL);
+        flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
+      } else if (menuStatus.editID!=menuStatus.selectedID) {
+        menuStatus.editID = menuStatus.selectedID; /* select it for edit */
+        flags |= item->handler(item, LCDMENU_EVENT_ENTER_EDIT, NULL);
+        flags |= LCDMENU_STATUS_FLAGS_UPDATE_VIEW;
       }
-    } else if (item->lvlDownID!=LCDMENU_ID_NONE) { /* enter on a main menu item: go down in menu hierarchy */
-      LCDMenu_OnEvent(LCDMENU_EVENT_RIGHT); /* emulate key */
+    }
+    if (flags&LCDMENU_STATUS_FLAGS_UPDATE_VIEW) { /* redraw needed? */
+      LCDMenu_OnEvent(LCDMENU_EVENT_DRAW, item); /* entered edit mode, redraw menu */
     }
   }
 }
 
-void LCDMenu_OnEvent(LCDMenu_EventType event) {
+void LCDMenu_OnEvent(LCDMenu_EventType event, const LCDMenu_MenuItem *menu) {
+  (void)menu;
   switch(event) {
-  case LCDMENU_EVENT_INIT:
-    break;
-  case LCDMENU_EVENT_DRAW:
-    //LCDMenu_PreDraw();
-    LCDMenu_Draw();
-    break;
-  case LCDMENU_EVENT_UP:
-    LCDMenu_CursorUp();
-    break;
-  case LCDMENU_EVENT_DOWN:
-    LCDMenu_CursorDown();
-    break;
-  case LCDMENU_EVENT_LEFT:
-    LCDMenu_CursorLeft();
-    break;
-  case LCDMENU_EVENT_RIGHT:
-    LCDMenu_CursorRight();
-    break;
-  case LCDMENU_EVENT_ENTER:
-    LCDMenu_CursorEnter();
-    break;
+    case LCDMENU_EVENT_INIT:
+      break;
+    case LCDMENU_EVENT_DRAW:
+      //LCDMenu_PreDraw();
+      LCDMenu_Draw();
+      break;
+    case LCDMENU_EVENT_UP:
+      LCDMenu_CursorUp();
+      break;
+    case LCDMENU_EVENT_DOWN:
+      LCDMenu_CursorDown();
+      break;
+    case LCDMENU_EVENT_LEFT:
+      LCDMenu_CursorLeft();
+      break;
+    case LCDMENU_EVENT_RIGHT:
+      LCDMenu_CursorRight();
+      break;
+    case LCDMENU_EVENT_ENTER:
+      LCDMenu_CursorEnter();
+      break;
+    default:
+      break;
   }
 }
 
