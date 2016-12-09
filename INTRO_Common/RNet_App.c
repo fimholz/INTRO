@@ -49,27 +49,27 @@ static uint8_t HandleDataRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *da
   
   (void)size;
   (void)packet;
-  switch(type) {
-    case RAPP_MSG_TYPE_DATA: /* generic data message */
-      *handled = TRUE;
-      val = *data; /* get data value */
-#if PL_CONFIG_HAS_SHELL
-      CLS1_SendStr((unsigned char*)"Data: ", io->stdOut);
-      CLS1_SendNum8u(val, io->stdOut);
-      CLS1_SendStr((unsigned char*)" from addr 0x", io->stdOut);
-      buf[0] = '\0';
-#if RNWK_SHORT_ADDR_SIZE==1
-      UTIL1_strcatNum8Hex(buf, sizeof(buf), srcAddr);
-#else
-      UTIL1_strcatNum16Hex(buf, sizeof(buf), srcAddr);
-#endif
-      UTIL1_strcat(buf, sizeof(buf), (unsigned char*)"\r\n");
-      CLS1_SendStr(buf, io->stdOut);
-#endif /* PL_HAS_SHELL */      
-      return ERR_OK;
-    default: /*! \todo Handle your own messages here */
-      break;
-  } /* switch */
+  	  switch(type) {
+  	  	  case RAPP_MSG_TYPE_DATA: /* generic data message */
+  	  		  *handled = TRUE;
+  	  		  val = *data; /* get data value */
+			  #if PL_CONFIG_HAS_SHELL
+  	  		  	  CLS1_SendStr((unsigned char*)"Data: ", io->stdOut);
+  	  		  	  CLS1_SendNum8u(val, io->stdOut);
+  	  		  	  CLS1_SendStr((unsigned char*)" from addr 0x", io->stdOut);
+  	  		  	  buf[0] = '\0';
+				  #if RNWK_SHORT_ADDR_SIZE==1
+  	  		  	  	  UTIL1_strcatNum8Hex(buf, sizeof(buf), srcAddr);
+				  #else
+  	  		  	  	  UTIL1_strcatNum16Hex(buf, sizeof(buf), srcAddr);
+				  #endif
+  	  		 	  UTIL1_strcat(buf, sizeof(buf), (unsigned char*)"\r\n");
+  	  		 	  CLS1_SendStr(buf, io->stdOut);
+			 #endif /* PL_HAS_SHELL */
+  	  		 return ERR_OK;
+  	  	  default: /*! \todo Handle your own messages here */
+  	  		  break;
+  	  } /* switch */
   return ERR_OK;
 }
 

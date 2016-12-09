@@ -122,9 +122,6 @@ void FRTOS1_vApplicationTickHook(void)
 #if PL_CONFIG_HAS_TIMER
   TMR_OnInterrupt();
 #endif
-#if PL_CONFIG_HAS_MOTOR_TACHO
-  TACHO_Sample();
-#endif
 }
 
 /*
