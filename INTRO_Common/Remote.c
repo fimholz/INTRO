@@ -288,12 +288,25 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
         SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
         REMOTE_SetOnOff(TRUE);
         DRV_SetMode(DRV_MODE_SPEED);
+        DRV_SetSpeed(0,0);
         SHELL_SendString("Remote ON\r\n");
-      } else if (val=='C') { /* red 'C' button */
-        /*! \todo add functionality */
-      } else if (val=='A') { /* green 'A' button */
-        /*! \todo add functionality */
+      } else if (val=='B') { 		// B für Speed inkrement
+    	  DRV_SetMode(DRV_MODE_SPEED);
+    	  DRV_SetSpeed(1000,1000);
+      } else if (val=='A') {		// A für Speed dekrement
+    	  DRV_SetMode(DRV_MODE_SPEED);
+    	  DRV_SetSpeed(-1000,-1000);
+      } else if (val=='S') {		// S für Stop
+    	  DRV_SetMode(DRV_MODE_STOP);
+      } else if (val=='C') {		// C für links
+    	  DRV_SetMode(DRV_MODE_POS);
+    	  TURN_TurnAngle(-15,NULL);
+      } else if (val=='D') {		// D für rechts
+    	  DRV_SetMode(DRV_MODE_POS);
+    	  TURN_TurnAngle(15,NULL);
       }
+
+
 #else
       *handled = FALSE; /* no shell and no buzzer? */
 #endif

@@ -3,7 +3,7 @@
   <Header>
     <Name>INTRO_Robot_Jucklinator</Name>
     <SavedBy>Erich Styger</SavedBy>
-    <ModificationStamp>143</ModificationStamp>
+    <ModificationStamp>147</ModificationStamp>
     <Date>2016-02-29</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -29,7 +29,7 @@
     <UseExistingModules>true</UseExistingModules>
     <RenamePeripheries>false</RenamePeripheries>
     <Autodependency>true</Autodependency>
-    <ProjectCompNumb>484</ProjectCompNumb>
+    <ProjectCompNumb>509</ProjectCompNumb>
     <DelUnusedPreviouslyGenFiles>true</DelUnusedPreviouslyGenFiles>
     <GeneratedCodeFrozen>false</GeneratedCodeFrozen>
     <AssignInitComponentNameToPrph>true</AssignInitComponentNameToPrph>
@@ -16572,8 +16572,8 @@
           <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
           <ComponentUUID>com.freescale.processorexpert.asynchroserial</ComponentUUID>
           <BeanType>AsynchroSerial</BeanType>
-          <Name>Serial2</Name>
-          <CompNumb>28</CompNumb>
+          <Name>Serial1</Name>
+          <CompNumb>489</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>PHONE</IconName>
@@ -16587,7 +16587,7 @@
               <ItemSymbol>DeviceName</ItemSymbol>
               <ReadOnly>true</ReadOnly>
               <UserReadOnly>true</UserReadOnly>
-              <Value>Serial2</Value>
+              <Value>Serial1</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>Ser</ItemSymbol>
@@ -19152,7 +19152,7 @@
               <ItemSymbol>BeforeNewSpeedName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_BeforeNewSpeed</Value>
+              <Value>Serial1_BeforeNewSpeed</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>AfterNewSpeed</ItemSymbol>
@@ -19168,7 +19168,7 @@
               <ItemSymbol>AfterNewSpeedName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_AfterNewSpeed</Value>
+              <Value>Serial1_AfterNewSpeed</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnError</ItemSymbol>
@@ -19184,7 +19184,7 @@
               <ItemSymbol>OnErrorName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnError</Value>
+              <Value>Serial1_OnError</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnErrorPriority</ItemSymbol>
@@ -19206,7 +19206,7 @@
               <ItemSymbol>OnRxCharName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnRxChar</Value>
+              <Value>Serial1_OnRxChar</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxCharPriority</ItemSymbol>
@@ -19228,7 +19228,7 @@
               <ItemSymbol>OnRxCharExtName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnRxCharExt</Value>
+              <Value>Serial1_OnRxCharExt</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxCharExtPriority</ItemSymbol>
@@ -19250,7 +19250,7 @@
               <ItemSymbol>OnTxCharName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnTxChar</Value>
+              <Value>Serial1_OnTxChar</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnTxCharPriority</ItemSymbol>
@@ -19272,7 +19272,7 @@
               <ItemSymbol>OnFullRxBufName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnFullRxBuf</Value>
+              <Value>Serial1_OnFullRxBuf</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnFullRxBufPriority</ItemSymbol>
@@ -19294,7 +19294,7 @@
               <ItemSymbol>OnFreeTxBufName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnFreeTxBuf</Value>
+              <Value>Serial1_OnFreeTxBuf</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnFreeTxBufPriority</ItemSymbol>
@@ -19316,7 +19316,7 @@
               <ItemSymbol>OnBreakName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnBreak</Value>
+              <Value>Serial1_OnBreak</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnBreakPriority</ItemSymbol>
@@ -19343,7 +19343,7 @@
               <ItemSymbol>OnIdleName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnIdle</Value>
+              <Value>Serial1_OnIdle</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnIdlePriority</ItemSymbol>
@@ -19375,7 +19375,7 @@
               <ItemSymbol>OnTxCompleteName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnTxComplete</Value>
+              <Value>Serial1_OnTxComplete</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnTxCompletePriority</ItemSymbol>
@@ -19402,7 +19402,7 @@
               <ItemSymbol>OnRxActiveEdgeName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial2_OnRxActiveEdge</Value>
+              <Value>Serial1_OnRxActiveEdge</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxActiveEdgePriority</ItemSymbol>
@@ -22905,8 +22905,8 @@
           <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
           <ComponentUUID>com.freescale.processorexpert.asynchroserial</ComponentUUID>
           <BeanType>AsynchroSerial</BeanType>
-          <Name>Serial1</Name>
-          <CompNumb>25</CompNumb>
+          <Name>Serial2</Name>
+          <CompNumb>491</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>PHONE</IconName>
@@ -22920,7 +22920,7 @@
               <ItemSymbol>DeviceName</ItemSymbol>
               <ReadOnly>true</ReadOnly>
               <UserReadOnly>true</UserReadOnly>
-              <Value>Serial1</Value>
+              <Value>Serial2</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>Ser</ItemSymbol>
@@ -25485,7 +25485,7 @@
               <ItemSymbol>BeforeNewSpeedName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_BeforeNewSpeed</Value>
+              <Value>Serial2_BeforeNewSpeed</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>AfterNewSpeed</ItemSymbol>
@@ -25501,7 +25501,7 @@
               <ItemSymbol>AfterNewSpeedName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_AfterNewSpeed</Value>
+              <Value>Serial2_AfterNewSpeed</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnError</ItemSymbol>
@@ -25517,7 +25517,7 @@
               <ItemSymbol>OnErrorName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnError</Value>
+              <Value>Serial2_OnError</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnErrorPriority</ItemSymbol>
@@ -25539,7 +25539,7 @@
               <ItemSymbol>OnRxCharName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnRxChar</Value>
+              <Value>Serial2_OnRxChar</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxCharPriority</ItemSymbol>
@@ -25561,7 +25561,7 @@
               <ItemSymbol>OnRxCharExtName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnRxCharExt</Value>
+              <Value>Serial2_OnRxCharExt</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxCharExtPriority</ItemSymbol>
@@ -25583,7 +25583,7 @@
               <ItemSymbol>OnTxCharName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnTxChar</Value>
+              <Value>Serial2_OnTxChar</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnTxCharPriority</ItemSymbol>
@@ -25605,7 +25605,7 @@
               <ItemSymbol>OnFullRxBufName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnFullRxBuf</Value>
+              <Value>Serial2_OnFullRxBuf</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnFullRxBufPriority</ItemSymbol>
@@ -25627,7 +25627,7 @@
               <ItemSymbol>OnFreeTxBufName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnFreeTxBuf</Value>
+              <Value>Serial2_OnFreeTxBuf</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnFreeTxBufPriority</ItemSymbol>
@@ -25649,7 +25649,7 @@
               <ItemSymbol>OnBreakName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnBreak</Value>
+              <Value>Serial2_OnBreak</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnBreakPriority</ItemSymbol>
@@ -25676,7 +25676,7 @@
               <ItemSymbol>OnIdleName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnIdle</Value>
+              <Value>Serial2_OnIdle</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnIdlePriority</ItemSymbol>
@@ -25708,7 +25708,7 @@
               <ItemSymbol>OnTxCompleteName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnTxComplete</Value>
+              <Value>Serial2_OnTxComplete</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnTxCompletePriority</ItemSymbol>
@@ -25735,7 +25735,7 @@
               <ItemSymbol>OnRxActiveEdgeName</ItemSymbol>
               <ReadOnly>false</ReadOnly>
               <UserReadOnly>false</UserReadOnly>
-              <Value>Serial1_OnRxActiveEdge</Value>
+              <Value>Serial2_OnRxActiveEdge</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>OnRxActiveEdgePriority</ItemSymbol>
@@ -32646,7 +32646,7 @@
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
           <Name>LEDpin3</Name>
-          <CompNumb>45</CompNumb>
+          <CompNumb>493</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -32692,7 +32692,7 @@
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
                 <Name>BitIoLdd5</Name>
-                <CompNumb>46</CompNumb>
+                <CompNumb>494</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -37881,8 +37881,8 @@
           <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
-          <Name>C12</Name>
-          <CompNumb>78</CompNumb>
+          <Name>C11</Name>
+          <CompNumb>495</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -37896,7 +37896,7 @@
               <ItemSymbol>DeviceName</ItemSymbol>
               <ReadOnly>true</ReadOnly>
               <UserReadOnly>true</UserReadOnly>
-              <Value>C12</Value>
+              <Value>C11</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>_Pin</ItemSymbol>
@@ -37927,8 +37927,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd16</Name>
-                <CompNumb>80</CompNumb>
+                <Name>BitIoLdd14</Name>
+                <CompNumb>496</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -37942,7 +37942,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd16</Value>
+                    <Value>BitIoLdd14</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -38477,7 +38477,7 @@
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
           <Name>C23</Name>
-          <CompNumb>79</CompNumb>
+          <CompNumb>497</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -38522,8 +38522,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd17</Name>
-                <CompNumb>81</CompNumb>
+                <Name>BitIoLdd15</Name>
+                <CompNumb>498</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -38537,7 +38537,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd17</Value>
+                    <Value>BitIoLdd15</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -39316,8 +39316,8 @@
           <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
-          <Name>C13</Name>
-          <CompNumb>85</CompNumb>
+          <Name>C12</Name>
+          <CompNumb>499</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -39331,7 +39331,7 @@
               <ItemSymbol>DeviceName</ItemSymbol>
               <ReadOnly>true</ReadOnly>
               <UserReadOnly>true</UserReadOnly>
-              <Value>C13</Value>
+              <Value>C12</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>_Pin</ItemSymbol>
@@ -39362,8 +39362,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd18</Name>
-                <CompNumb>87</CompNumb>
+                <Name>BitIoLdd16</Name>
+                <CompNumb>500</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -39377,7 +39377,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd18</Value>
+                    <Value>BitIoLdd16</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -39911,8 +39911,8 @@
           <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
-          <Name>C25</Name>
-          <CompNumb>86</CompNumb>
+          <Name>C24</Name>
+          <CompNumb>501</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -39926,7 +39926,7 @@
               <ItemSymbol>DeviceName</ItemSymbol>
               <ReadOnly>true</ReadOnly>
               <UserReadOnly>true</UserReadOnly>
-              <Value>C25</Value>
+              <Value>C24</Value>
             </ItemState>
             <ItemState>
               <ItemSymbol>_Pin</ItemSymbol>
@@ -39957,8 +39957,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd19</Name>
-                <CompNumb>88</CompNumb>
+                <Name>BitIoLdd17</Name>
+                <CompNumb>502</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -39972,7 +39972,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd19</Value>
+                    <Value>BitIoLdd17</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -41185,7 +41185,7 @@
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntVector0</ItemSymbol>
-        <Value>INT_FTM0</Value>
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntPriority0</ItemSymbol>
@@ -41322,7 +41322,7 @@
         <ItemSymbol>Tmg_ChanOffset1</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>init:0 µs;prec:5%;RTS:none;clksrc_presc[SpeedMode0]Auto select;clksrc_presc[SpeedMode1]Auto select;clksrc_presc[SpeedMode2]Auto select;clksrc_presc[SpeedMode3]Auto select;clksrc_presc[SpeedMode4]Auto select;clksrc_presc[SpeedMode5]Auto select;clksrc_presc[SpeedMode6]Auto select;clksrc_presc[SpeedMode7]Auto select</Value>
+        <Value>init:;prec:5%;RTS:none;clksrc_presc[SpeedMode0]Auto select;clksrc_presc[SpeedMode1]Auto select;clksrc_presc[SpeedMode2]Auto select;clksrc_presc[SpeedMode3]Auto select;clksrc_presc[SpeedMode4]Auto select;clksrc_presc[SpeedMode5]Auto select;clksrc_presc[SpeedMode6]Auto select;clksrc_presc[SpeedMode7]Auto select</Value>
         <RuntimeSetting>0</RuntimeSetting>
         <ReqDevPrescHigh>-1</ReqDevPrescHigh>
         <ReqDevPrescLow>-1</ReqDevPrescLow>
@@ -41404,7 +41404,7 @@
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntVector1</ItemSymbol>
-        <Value>INT_FTM0</Value>
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntPriority1</ItemSymbol>
@@ -41541,7 +41541,7 @@
         <ItemSymbol>Tmg_ChanOffset2</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>init:0 µs;prec:5%;RTS:none;clksrc_presc[SpeedMode0]Auto select;clksrc_presc[SpeedMode1]Auto select;clksrc_presc[SpeedMode2]Auto select;clksrc_presc[SpeedMode3]Auto select;clksrc_presc[SpeedMode4]Auto select;clksrc_presc[SpeedMode5]Auto select;clksrc_presc[SpeedMode6]Auto select;clksrc_presc[SpeedMode7]Auto select</Value>
+        <Value>init:;prec:5%;RTS:none;clksrc_presc[SpeedMode0]Auto select;clksrc_presc[SpeedMode1]Auto select;clksrc_presc[SpeedMode2]Auto select;clksrc_presc[SpeedMode3]Auto select;clksrc_presc[SpeedMode4]Auto select;clksrc_presc[SpeedMode5]Auto select;clksrc_presc[SpeedMode6]Auto select;clksrc_presc[SpeedMode7]Auto select</Value>
         <RuntimeSetting>0</RuntimeSetting>
         <ReqDevPrescHigh>-1</ReqDevPrescHigh>
         <ReqDevPrescLow>-1</ReqDevPrescLow>
@@ -41623,7 +41623,7 @@
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntVector2</ItemSymbol>
-        <Value>INT_FTM0</Value>
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>ChannelCmpIntPriority2</ItemSymbol>
@@ -48115,7 +48115,7 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>37</Value>
+        <Value>13</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
@@ -48123,8 +48123,8 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>1</Index>
-        <EnumSymbVal>RF_SETUP_RF_DR_1000</EnumSymbVal>
+        <Index>2</Index>
+        <EnumSymbVal>RF_SETUP_RF_DR_2000</EnumSymbVal>
       </ItemState>
       <ItemState>
         <ItemSymbol>PayloadSize</ItemSymbol>
@@ -48454,7 +48454,7 @@
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
           <Name>CE1</Name>
-          <CompNumb>192</CompNumb>
+          <CompNumb>503</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -48499,8 +48499,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd22</Name>
-                <CompNumb>194</CompNumb>
+                <Name>BitIoLdd18</Name>
+                <CompNumb>504</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -48514,7 +48514,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd22</Value>
+                    <Value>BitIoLdd18</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -49049,7 +49049,7 @@
           <ComponentUUID>com.freescale.processorexpert.bitio</ComponentUUID>
           <BeanType>BitIO</BeanType>
           <Name>CSN1</Name>
-          <CompNumb>193</CompNumb>
+          <CompNumb>505</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>BITIO</IconName>
@@ -49094,8 +49094,8 @@
                 <Repository>file:/${ProcessorExpert_loc}/Repositories/Kinetis_Repository</Repository>
                 <ComponentUUID>com.freescale.processorexpert.ldd.bitio_ldd</ComponentUUID>
                 <BeanType>BitIO_LDD</BeanType>
-                <Name>BitIoLdd23</Name>
-                <CompNumb>195</CompNumb>
+                <Name>BitIoLdd19</Name>
+                <CompNumb>506</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>PORT_LDD</IconName>
@@ -49109,7 +49109,7 @@
                     <ItemSymbol>DeviceName</ItemSymbol>
                     <ReadOnly>true</ReadOnly>
                     <UserReadOnly>true</UserReadOnly>
-                    <Value>BitIoLdd23</Value>
+                    <Value>BitIoLdd19</Value>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>_Pin</ItemSymbol>
@@ -49702,7 +49702,7 @@
           <ComponentUUID>com.freescale.processorexpert.extint</ComponentUUID>
           <BeanType>ExtInt</BeanType>
           <Name>IRQ1</Name>
-          <CompNumb>196</CompNumb>
+          <CompNumb>507</CompNumb>
           <CompEnabled>true</CompEnabled>
           <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
           <IconName>EXTINT</IconName>
@@ -49748,7 +49748,7 @@
                 <ComponentUUID>com.freescale.processorexpert.ldd.extint_ldd</ComponentUUID>
                 <BeanType>ExtInt_LDD</BeanType>
                 <Name>ExtIntLdd2</Name>
-                <CompNumb>197</CompNumb>
+                <CompNumb>508</CompNumb>
                 <CompEnabled>true</CompEnabled>
                 <GenCodeMode>ALWAYS_WRITE</GenCodeMode>
                 <IconName>ExtInt_LDD</IconName>
