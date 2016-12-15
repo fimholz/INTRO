@@ -88,11 +88,12 @@ void APP_EventHandler(EVNT_Handle event) {
 	  BUZ_PlayTune(BUZ_TUNE_BUTTON);
     #endif
     #if PL_CONFIG_HAS_REMOTE && !PL_CONFIG_BOARD_IS_ROBO
-	    SHELL_SendString("SW2 pressed: right\r\n");
+	    SHELL_SendString("SW1 pressed: right\r\n");
 	    //LED1_Neg();
 	    buf = 'D';
 	    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     #endif
+	break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=2
   case EVNT_SW2_PRESSED:
