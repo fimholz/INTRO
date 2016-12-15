@@ -42,6 +42,10 @@
 #if PL_CONFIG_HAS_LCD_MENU
   #include "LCD.h"
 #endif
+#if PL_CONFIG_HAS_REMOTE
+  #include "RApp.h"
+  uint8_t buf;
+#endif
 
 #if PL_CONFIG_HAS_EVENTS
 void APP_EventHandler(EVNT_Handle event) {
@@ -71,7 +75,7 @@ void APP_EventHandler(EVNT_Handle event) {
       REF_CalibrateStartStop();
     #endif
     //CLS1_SendStr("SW1 pressed\r\n", CLS1_GetStdio()->stdOut);
-    SHELL_SendString("SW1 pressed\r\n");
+    SHELL_SendString("SW1 long pressed\r\n");
     #if PL_CONFIG_HAS_BUZZER
     BUZ_PlayTune(BUZ_TUNE_BUTTON);
     #endif
@@ -83,41 +87,59 @@ void APP_EventHandler(EVNT_Handle event) {
 	#if PL_CONFIG_HAS_BUZZER
 	  BUZ_PlayTune(BUZ_TUNE_BUTTON);
     #endif
+    #if PL_CONFIG_HAS_REMOTE && !PL_CONFIG_BOARD_IS_ROBO
+	    SHELL_SendString("SW2 pressed: right\r\n");
+	    //LED1_Neg();
+	    buf = 'D';
+	    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
+    #endif
   #endif
   #if PL_CONFIG_NOF_KEYS>=2
   case EVNT_SW2_PRESSED:
-    SHELL_SendString("SW2 pressed\r\n");
-    LED1_Neg();
+    SHELL_SendString("SW2 pressed: left\r\n");
+    //LED1_Neg();
+    buf = 'C';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=3
   case EVNT_SW3_PRESSED:
-    SHELL_SendString("SW3 pressed\r\n");
-    LED1_Neg();
+    SHELL_SendString("SW3 pressed: reverse\r\n");
+    //LED1_Neg();
+    buf = 'A';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=4
   case EVNT_SW4_PRESSED:
-    SHELL_SendString("SW4 pressed\r\n");
-    LED1_Neg();
+    SHELL_SendString("SW4 pressed: stop\r\n");
+    //LED1_Neg();
+    buf = 'S';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=5
   case EVNT_SW5_PRESSED:
-    SHELL_SendString("SW5 pressed\r\n");
-    LED1_Neg();
+	SHELL_SendString("SW5 pressed: forward\r\n");
+    //LED1_Neg();
+    buf = 'B';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=6
   case EVNT_SW6_PRESSED:
-    SHELL_SendString("SW6 pressed\r\n");
-    LED1_Neg();
+    SHELL_SendString("SW6 pressed: disable remote\r\n");
+    //LED1_Neg();
+    buf = 'F';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
   #if PL_CONFIG_NOF_KEYS>=7
   case EVNT_SW7_PRESSED:
-    SHELL_SendString("SW7 pressed\r\n");
-    LED1_Neg();
+    SHELL_SendString("SW7 pressed: enable remote\r\n");
+    //LED1_Neg();
+    buf = 'G';
+    (void)RAPP_SendPayloadDataBlock(&buf, sizeof(buf), RAPP_MSG_TYPE_JOYSTICK_BTN, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
     break;
   #endif
 #endif /* PL_CONFIG_HAS_KEYS */
