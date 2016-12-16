@@ -8,6 +8,7 @@
 
 #include "Platform.h"
 #if PL_CONFIG_HAS_LINE_FOLLOW
+#include "RApp.h"
 #include "LineFollow.h"
 #include "FRTOS1.h"
 #include "CLS1.h"
@@ -31,10 +32,14 @@
 typedef enum {
   STATE_IDLE,              /* idle, not doing anything */
   STATE_FOLLOW_SEGMENT,    /* line following segment, going forward */
+  STATE_FOLLOW_SEGMENT_BEFORE,    /* start on full line */
   STATE_TURN,              /* reached an intersection, turning around */
   STATE_FINISHED,          /* reached finish area */
   STATE_STOP               /* stop the engines */
 } StateType;
+
+
+uint8_t message[2];
 
 /* task notification bits */
 #define LF_START_FOLLOWING (1<<0)  /* start line following */
@@ -84,6 +89,62 @@ static void StateMachine(void) {
   switch (LF_currState) {
     case STATE_IDLE:
       break;
+    case STATE_FOLLOW_SEGMENT_BEFORE:
+      if(REF_GetLineKind()!=REF_LINE_FULL){
+        DRV_SetMode(DRV_MODE_NONE);  //disable any drive mode
+        PID_Start();
+        LF_currState = STATE_FOLLOW_SEGMENT;
+    	SHELL_SendString((unsigned char*)"STATE_FOLLOW_SEGMENT!\r\n");
+      }
+      break;
+    case STATE_FOLLOW_SEGMENT:
+      if (!FollowSegment()) {
+        if(REF_GetLineKind()==REF_LINE_FULL){
+        	LF_currState = STATE_FINISHED;
+        	SHELL_SendString((unsigned char*)"STATE_FINISHED!\r\n");
+        }else{
+      	    SHELL_SendString((unsigned char*)"Turn 160 degrees!\r\n");
+      	    TURN_TurnAngle(160, NULL);
+        	LF_currState = STATE_TURN; /* stop if we do not have a line any more */
+        	SHELL_SendString((unsigned char*)"STATE_TURN!\r\n");
+        }
+      }
+      break;
+
+    case STATE_TURN:
+        if(REF_GetLineKind()!=REF_LINE_STRAIGHT){
+    	  //TURN_Turn(TURN_RIGHT180,NULL);
+      	  SHELL_SendString((unsigned char*)"Turn 10 degrees!\r\n");
+    	  TURN_TurnAngle(10, NULL);
+        } else {
+    	  DRV_SetMode(DRV_MODE_NONE);
+    	  PID_Start();
+    	  LF_currState = STATE_FOLLOW_SEGMENT;
+    	  SHELL_SendString((unsigned char*)"STATE_FOLLOW_SEGMENT!\r\n");
+        }
+      break;
+
+    case STATE_FINISHED:
+        message[0] = 13;
+        message[1] = 'C';
+        (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, 0x12, RPHY_PACKET_FLAGS_REQ_ACK);
+    	DRV_SetMode(DRV_MODE_STOP);
+        LF_currState = STATE_IDLE;
+      break;
+
+    case STATE_STOP:
+      SHELL_SendString("Stopped!\r\n");
+      TURN_Turn(TURN_STOP, NULL);
+      LF_currState = STATE_IDLE;
+  	SHELL_SendString((unsigned char*)"STATE_IDLE!\r\n");
+      break;
+  } /* switch */
+}
+
+/*static void StateMachine(void) {
+  switch (LF_currState) {
+    case STATE_IDLE:
+      break;
     case STATE_FOLLOW_SEGMENT:
       if (!FollowSegment()) {
         SHELL_SendString((unsigned char*)"No line detected!\r\n");
@@ -91,7 +152,7 @@ static void StateMachine(void) {
         	LF_currState = STATE_STOP;
         }else{
         	SHELL_SendString((unsigned char*)"TURN 180 Grad!\r\n");
-        	LF_currState = STATE_TURN; /* stop if we do not have a line any more */
+        	LF_currState = STATE_TURN;  stop if we do not have a line any more
         }
       }
       break;
@@ -111,8 +172,8 @@ static void StateMachine(void) {
       TURN_Turn(TURN_STOP, NULL);
       LF_currState = STATE_IDLE;
       break;
-  } /* switch */
-}
+  }  switch
+}*/
 
 bool LF_IsFollowing(void) {
   return LF_currState!=STATE_IDLE;
@@ -125,10 +186,24 @@ static void LineTask (void *pvParameters) {
   for(;;) {
     (void)xTaskNotifyWait(0UL, LF_START_FOLLOWING|LF_STOP_FOLLOWING, &notifcationValue, 0); /* check flags */
     if (notifcationValue&LF_START_FOLLOWING) {
-      DRV_SetMode(DRV_MODE_NONE); /* disable any drive mode */
+      message[0] = 13;
+      message[1] = 'B';
+      (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, 0x12, RPHY_PACKET_FLAGS_REQ_ACK);
+  	  //TURN_Turn(TURN_RIGHT180,NULL);
+      //DRV_SetMode(DRV_MODE_NONE);  //disable any drive mode
+      //PID_Start();
+	  SHELL_SendString((unsigned char*)"Turn 160 degrees!\r\n");
+	  //TURN_Turn(TURN_RIGHT90,NULL);
+	  TURN_TurnAngle(160, NULL);
+      LF_currState = STATE_TURN;
+      SHELL_SendString((unsigned char*)"STATE_TURN!\r\n");
+      //LF_currState = STATE_FOLLOW_SEGMENT_BEFORE;
+    }
+/*    if (notifcationValue&LF_START_FOLLOWING) {
+      DRV_SetMode(DRV_MODE_NONE);  disable any drive mode
       PID_Start();
       LF_currState = STATE_FOLLOW_SEGMENT;
-    }
+    }*/
     if (notifcationValue&LF_STOP_FOLLOWING) {
       LF_currState = STATE_STOP;
     }
