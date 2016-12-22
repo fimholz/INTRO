@@ -26,6 +26,9 @@
 #if PL_CONFIG_HAS_DRIVE
   #include "Drive.h"
 #endif
+#if PL_CONFIG_HAS_TURN
+  #include "Turn.h"
+#endif
 #if PL_CONFIG_HAS_LEDS
   #include "LED.h"
 #endif
@@ -283,30 +286,39 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
       val = *data; /* get data value */
 #if PL_CONFIG_HAS_SHELL && PL_CONFIG_HAS_BUZZER && PL_CONFIG_HAS_REMOTE
       if (val=='F') { /* F button, disable remote */
-        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
-        REMOTE_SetOnOff(FALSE);
-        speedLeft = 0;
-        speedRight = 0;
-        DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
-        DRV_SetMode(DRV_MODE_STOP);
-        SHELL_SendString("Remote OFF\r\n");
-        DRV_SetMode(DRV_MODE_NONE); /* disable any drive mode */
-        PID_Start();
-        LF_StartStopFollowing();
-      } else if (val=='G') { /* center joystick button: enable remote */
-        SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
-        REMOTE_SetOnOff(TRUE);
-        speedLeft = 0;
-        speedRight = 0;
-        DRV_SetMode(DRV_MODE_SPEED);
-        DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
-        //DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
-        SHELL_SendString("Remote ON\r\n");
-        uint8_t message[2];
-        message[0] = 13;
-        message[1] = 'A';
-        (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, 0x12, RPHY_PACKET_FLAGS_REQ_ACK);
-
+    	if (REMOTE_GetOnOff()) {
+          SHELL_ParseCmd((unsigned char*)"buzzer buz 300 500");
+          REMOTE_SetOnOff(FALSE);
+          speedLeft = 0;
+          speedRight = 0;
+          DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
+          DRV_SetMode(DRV_MODE_STOP);
+          SHELL_SendString("Remote OFF\r\n");
+          DRV_SetMode(DRV_MODE_NONE); /* disable any drive mode */
+          PID_Start();
+          LF_StartStopFollowing();
+    	} else { /* F button, enable remote */
+          SHELL_ParseCmd((unsigned char*)"buzzer buz 300 1000");
+          REMOTE_SetOnOff(TRUE);
+          speedLeft = 0;
+          speedRight = 0;
+          DRV_SetMode(DRV_MODE_SPEED);
+          DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
+          //DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
+          SHELL_SendString("Remote ON\r\n");
+          uint8_t message[2];
+          message[0] = 13;
+          message[1] = 'A';
+          (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
+        	SHELL_SendString((unsigned char*)"Sent A\r\n");
+    	}
+      } else if (val=='G') { /* G button, turn 90 degree */
+          //speedLeft = 0;
+          //speedRight = 0;
+          //DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
+    	  TURN_Turn(TURN_RIGHT90, NULL);
+          DRV_SetMode(DRV_MODE_SPEED);
+          DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
       } else if (val=='B' && REMOTE_GetOnOff()) { 		// B für Speed inkrement
           speedLeft += 500;
           speedRight += 500;
@@ -324,6 +336,7 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
           speedRight = 0;
           DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
       } else if (val=='C' && REMOTE_GetOnOff()) {		// C für links
+          #if 0
     	  if(speedLeft > speedRight) {
     		  speedRight = speedLeft;
     	  } else {
@@ -332,10 +345,14 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
     	  }
           speedLeft = getValidSpeed(speedLeft);
           speedRight = getValidSpeed(speedRight);
+          #endif
+    	  TURN_TurnAngle(-15, NULL);
+          DRV_SetMode(DRV_MODE_SPEED);
           DRV_SetSpeed(speedLeft, speedRight); /* set new speed */
     	  //DRV_SetMode(DRV_MODE_POS);
     	  //TURN_TurnAngle(-15,NULL);
       } else if (val=='D' && REMOTE_GetOnOff()) {		// D für rechts
+          #if 0
     	  if(speedLeft < speedRight) {
     		  speedRight = speedLeft;
     	  } else {
@@ -344,6 +361,9 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
     	  }
           speedLeft = getValidSpeed(speedLeft);
           speedRight = getValidSpeed(speedRight);
+          #endif
+    	  TURN_TurnAngle(15, NULL);
+          DRV_SetMode(DRV_MODE_SPEED);
           DRV_SetSpeed(speedLeft, speedRight); /* set new speed */
     	  //DRV_SetMode(DRV_MODE_POS);
     	  //TURN_TurnAngle(15,NULL);
@@ -466,7 +486,7 @@ void REMOTE_Deinit(void) {
 
 /*! \brief Initializes module */
 void REMOTE_Init(void) {
-  REMOTE_isOn = TRUE;
+  REMOTE_isOn = FALSE;
   REMOTE_isVerbose = FALSE;
   REMOTE_useJoystick = TRUE;
 #if PL_CONFIG_CONTROL_SENDER

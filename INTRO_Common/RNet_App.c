@@ -26,7 +26,13 @@
   #include "Remote.h"
 #endif
 
-static RNWK_ShortAddrType APP_dstAddr = RNWK_ADDR_BROADCAST; /* destination node address */
+#if PL_CONFIG_BOARD_IS_ROBO
+  static RNWK_ShortAddrType APP_dstAddr = 0x12; /* destination node address */
+#elif PL_CONFIG_BOARD_IS_REMOTE
+  static RNWK_ShortAddrType APP_dstAddr = 0x88; /* destination node address */
+#else
+  static RNWK_ShortAddrType APP_dstAddr = RNWK_ADDR_BROADCAST; /* destination node address */
+#endif
 
 typedef enum {
   RNETA_NONE,
@@ -50,7 +56,24 @@ static uint8_t HandleDataRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *da
   (void)size;
   (void)packet;
   	  switch(type) {
-  	  	  case RAPP_MSG_TYPE_DATA: /* generic data message */
+	  	  case RAPP_MSG_TYPE_DATA: /* generic data message */
+	  		  *handled = TRUE;
+	  		  val = *data; /* get data value */
+		  #if PL_CONFIG_HAS_SHELL
+	  		  	  CLS1_SendStr((unsigned char*)"Data: ", io->stdOut);
+	  		  	  CLS1_SendNum8u(val, io->stdOut);
+	  		  	  CLS1_SendStr((unsigned char*)" from addr 0x", io->stdOut);
+	  		  	  buf[0] = '\0';
+			  #if RNWK_SHORT_ADDR_SIZE==1
+	  		  	  	  UTIL1_strcatNum8Hex(buf, sizeof(buf), srcAddr);
+			  #else
+	  		  	  	  UTIL1_strcatNum16Hex(buf, sizeof(buf), srcAddr);
+			  #endif
+	  		 	  UTIL1_strcat(buf, sizeof(buf), (unsigned char*)"\r\n");
+	  		 	  CLS1_SendStr(buf, io->stdOut);
+		 #endif /* PL_HAS_SHELL */
+	  		 return ERR_OK;
+  	  	  case RAPP_MSG_TYPE_CONTEST: /* generic data message */
   	  		  *handled = TRUE;
   	  		  val = *data; /* get data value */
 			  #if PL_CONFIG_HAS_SHELL
@@ -122,9 +145,19 @@ static void Process(void) {
 }
 
 static void Init(void) {
+#if PL_CONFIG_BOARD_IS_ROBO
+  if (RAPP_SetThisNodeAddr(0x88)!=ERR_OK) { /* set a default address */
+    //APP_DebugPrint((unsigned char*)"ERR: Failed setting node address\r\n");
+  }
+#elif PL_CONFIG_BOARD_IS_REMOTE
+  if (RAPP_SetThisNodeAddr(0x90)!=ERR_OK) { /* set a default address */
+    //APP_DebugPrint((unsigned char*)"ERR: Failed setting node address\r\n");
+  }
+#else
   if (RAPP_SetThisNodeAddr(RNWK_ADDR_BROADCAST)!=ERR_OK) { /* set a default address */
     //APP_DebugPrint((unsigned char*)"ERR: Failed setting node address\r\n");
   }
+#endif
 }
 
 static void RadioTask(void *pvParameters) {

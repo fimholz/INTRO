@@ -127,7 +127,8 @@ static void StateMachine(void) {
     case STATE_FINISHED:
         message[0] = 13;
         message[1] = 'C';
-        (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, 0x12, RPHY_PACKET_FLAGS_REQ_ACK);
+        (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
+    	SHELL_SendString((unsigned char*)"Sent C\r\n");
     	DRV_SetMode(DRV_MODE_STOP);
         LF_currState = STATE_IDLE;
       break;
@@ -188,7 +189,8 @@ static void LineTask (void *pvParameters) {
     if (notifcationValue&LF_START_FOLLOWING) {
       message[0] = 13;
       message[1] = 'B';
-      (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, 0x12, RPHY_PACKET_FLAGS_REQ_ACK);
+      (void)RAPP_SendPayloadDataBlock(message, sizeof(message), 0xAC, RNETA_GetDestAddr(), RPHY_PACKET_FLAGS_REQ_ACK);
+  	  SHELL_SendString((unsigned char*)"Sent B\r\n");
   	  //TURN_Turn(TURN_RIGHT180,NULL);
       //DRV_SetMode(DRV_MODE_NONE);  //disable any drive mode
       //PID_Start();
