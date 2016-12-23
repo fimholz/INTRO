@@ -194,9 +194,9 @@ static void LineTask (void *pvParameters) {
   	  //TURN_Turn(TURN_RIGHT180,NULL);
       //DRV_SetMode(DRV_MODE_NONE);  //disable any drive mode
       //PID_Start();
-	  SHELL_SendString((unsigned char*)"Turn 160 degrees!\r\n");
+	  // zuletzt kommentiert SHELL_SendString((unsigned char*)"Turn 160 degrees!\r\n");
 	  //TURN_Turn(TURN_RIGHT90,NULL);
-	  TURN_TurnAngle(160, NULL);
+  	// zuletzt kommentiert TURN_TurnAngle(160, NULL);
       LF_currState = STATE_TURN;
       SHELL_SendString((unsigned char*)"STATE_TURN!\r\n");
       //LF_currState = STATE_FOLLOW_SEGMENT_BEFORE;
