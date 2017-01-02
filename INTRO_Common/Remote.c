@@ -316,18 +316,19 @@ uint8_t REMOTE_HandleRemoteRxMessage(RAPP_MSG_Type type, uint8_t size, uint8_t *
           //speedLeft = 0;
           //speedRight = 0;
           //DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
-    	  TURN_Turn(TURN_RIGHT45, NULL);
+    	  //TURN_Turn(TURN_RIGHT45, NULL);
+    	  TURN_TurnAngle(30, NULL);
           DRV_SetMode(DRV_MODE_SPEED);
           DRV_SetSpeed(speedLeft, speedRight); /* turn off motors */
       } else if (val=='B' && REMOTE_GetOnOff()) { 		// B für Speed inkrement
-          speedLeft += 1000;
-          speedRight += 1000;
+          speedLeft += 500;
+          speedRight += 500;
           speedLeft = getValidSpeed(speedLeft);
           speedRight = getValidSpeed(speedRight);
           DRV_SetSpeed(speedLeft, speedRight); /* set new speed */
       } else if (val=='A' && REMOTE_GetOnOff()) {		// A für Speed dekrement
-          speedLeft -= 1000;
-          speedRight -= 1000;
+          speedLeft -= 500;
+          speedRight -= 500;
           speedLeft = getValidSpeed(speedLeft);
           speedRight = getValidSpeed(speedRight);
           DRV_SetSpeed(speedLeft, speedRight); /* set new speed */
